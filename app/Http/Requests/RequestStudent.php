@@ -37,7 +37,9 @@ class RequestStudent extends FormRequest
     public function messages()
     {
         return [
-                'required' => ':attribute là trường bắt buộc',
+                'name.required' => 'Bạn phải nhập tên',
+                'birthday.required' => 'Sao không nhập email?',
+                'required' => ':attribute chưa nhập',
                 'max' => ':attribute không quá :max ký tự',
                 'min' => ':attribute : hãy nhập đầy đủ :attribute',
         ];

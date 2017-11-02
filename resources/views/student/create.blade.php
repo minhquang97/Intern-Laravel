@@ -16,9 +16,12 @@
         <div class="alert alert-danger">
             <strong>Student</strong><br/>There were some problems with your input.<br/><br/>
             <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                @foreach ($errors->all() as $message)
+                    <li>{{ $message }}</li>
                 @endforeach
+                @if ($errors->has('name')) 
+                    {{$errors->first('name')}}
+                @endif
             </ul>
             Mời nhập lại
         </div>
