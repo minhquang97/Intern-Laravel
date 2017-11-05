@@ -12,6 +12,11 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
       /*  $students = Student::latest()->paginate(10);
@@ -79,6 +84,16 @@ class StudentController extends Controller
         return redirect()->route('student.index')
          ->with('success','Student updated successfully');
         //
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->id;
+        $student = Student::find($search);
+        if(empty($search))
+            return redirect()->route('student.index')->with('danger','Please input for search student!!');
+        else if(empty($student)) return  redirect()->route('student.index')->with('danger','Student does not exist!!');
+        return view('student.show',compact('student'));
     }
     /**
      * Remove the specified resource from storage.

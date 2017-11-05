@@ -1,19 +1,29 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
+            <div class="col-lg-3 col-md-3">
                 <h2>Student CRUD</h2>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('student.create') }}"> Create New Student</a>
+            <div class="col-lg-5 col-lg-offset-4 col-md-5 col-md-offset-4"  style="margin-top: 20px;">
+              
+                 {!! Form::open(array ('url' => 'student/search' , 'method'=>'POST','class'=>'form-inline')) !!}
+                              <a class="btn btn-success" href="{{ route('student.create') }}"> Create New Student</a>
+                            <div class="form-group">
+                            {!! Form::text('id', null, array('placeholder' => 'Search','class' => 'form-control' )) !!}
+                            </div>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                {!! Form::close() !!}
             </div>
-        </div>
     </div>
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
+    @if ($message = Session::get('danger'))
+        <div class="alert alert-danger">
             <p>{{ $message }}</p>
         </div>
     @endif
