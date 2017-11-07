@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
                         $table->string('name', 50);
                         $table->date('birthday');
                         $table->string('address', 100);
-                        $table->string('class',20);
+                        $table->string('class',20); 
                         $table->timestamps();
         });
     }

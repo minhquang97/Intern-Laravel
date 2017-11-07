@@ -31,4 +31,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/testdb','TestEloquent@testdb');
 
 Route::get('/redirect', 'SocialAuthFacebookController@redirect');
-Route::get('/callback', 'SocialAuthFacebookController@callback');
+Route::get('/callback', 'SocialAuthFacebookController@callback');	

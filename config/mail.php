@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('minhquang4334@gmail.com', 'minhquang4334@gmail.com'),
-        'name' => env('Minh Quang', 'Minh Quang'),
+        'address' => 'quanghm@haposoft.com',
+        'name' => 'Minh Quang',
     ],
 
     /*
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('minhquang4334@gmail.com'),
+    'username' => env('MAIL_USERNAME','minhquang4334'),
 
-    'password' => env('xwuaqwwkzyiryqwt'),
+    'password' => env('MAIL_PASSWORD','@01697655254'),
 
     /*
     |--------------------------------------------------------------------------

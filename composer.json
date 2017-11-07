@@ -58,7 +58,7 @@
         "optimize-autoloader": true
     }
     ,
-    "repositories": [
+   "repositories": [
     {
     "type": "composer",
     "url": "https://packagist.org"
