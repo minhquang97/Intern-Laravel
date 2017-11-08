@@ -12,17 +12,17 @@ class Classes extends Model
 
 	public function teacher() 
 	{
-		return $this->belongsto('App\Model\Teacher');
+		return $this->belongsto(Teacher::class);
 	}
 
 	public function subject()
 	{
-		return $this->belongsto('App\Model\Subject');
+		return $this->belongsto(Subject::class);
 	}
 
 	 public function students()
 	    {
-	    	return $this->belongsToMany('App\Model\Student','student_class','class_id','student_id')->withPivot('score');
+	    	return $this->belongsToMany(Student::class,'student_class','class_id','student_id')->withPivot('score');
 	    }
     //
 }

@@ -12,7 +12,7 @@ class Subject extends Model
 
 	public function classes() 
 	{
-		return $this->hasMany('App\Model\Classes');
+		return $this->hasMany(Classes::class);
 	}
     //
 }
