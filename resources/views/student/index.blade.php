@@ -10,7 +10,7 @@
                  {!! Form::open(array ('url' => 'student/search' , 'method'=>'POST','class'=>'form-inline')) !!}
                               <a class="btn btn-success" href="{{ route('student.create') }}"> Create New Student</a>
                             <div class="form-group">
-                            {!! Form::text('id', null, array('placeholder' => 'Search','class' => 'form-control' )) !!}
+                            {!! Form::text('name', null, array('placeholder' => 'Search','class' => 'form-control' )) !!}
                             </div>
                             <button type="submit" class="btn btn-primary">Search</button>
                 {!! Form::close() !!}

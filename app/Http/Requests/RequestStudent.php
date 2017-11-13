@@ -24,10 +24,9 @@ class RequestStudent extends FormRequest
     {
         return [
                 'id' =>'required|numeric',
-                'name' => 'required|max:50|min:5|regex:/^[a-zA-Z]+$/u|max:255',
+                'name' => 'required|max:50|min:5|max:255',
                 'birthday' => 'required|date_format: "Y-m-d"',
-                'address' => 'required|max:100',
-                'class' => 'required|max:20',
+                'password' => 'required|min:6',
         ];
     }
     /**
@@ -42,9 +41,8 @@ class RequestStudent extends FormRequest
                 'birthday.required' => 'Sao không nhập email?',
                 'required' => ':attribute chưa nhập',
                 'max' => ':attribute không quá :max ký tự',
-                'min' => ':attribute : hãy nhập đầy đủ :attribute',
+                'min' => ':attribute : quá ngắn',
                 'date_format' => "Ngày sinh phải nhập đúng format ví dụ: 1997-03-04",
-                'regex' => "Tên chỉ bao gồm chữ cái",
         ];
     }
 }
