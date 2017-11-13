@@ -1,8 +1,11 @@
 <?php
+
+namespace App\Model;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable;
     /**

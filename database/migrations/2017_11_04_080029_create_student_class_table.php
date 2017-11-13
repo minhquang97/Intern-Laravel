@@ -15,8 +15,10 @@ class CreateStudentClassTable extends Migration
     {
         Schema::create('student_class', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('class_id');
-            $table->integer('student_id');
+            $table->integer('class_id')->unsigned();
+            $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
+            $table->integer('student_id')->unsigned();
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->integer('score');
             $table->timestamps();
         });
