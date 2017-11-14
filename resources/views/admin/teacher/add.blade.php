@@ -19,7 +19,7 @@
 
     @endif
 
-    {!! Form::open(array ('route' => 'add-teacher' , 'method'=>'POST')) !!}
+    {!! Form::open(array ('url' => 'admin/teacher/add-teacher' , 'method'=>'POST')) !!}
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-xs-offset-3 col-sm-offset-3 col-md-offset-3">
                 <div class="form-group">

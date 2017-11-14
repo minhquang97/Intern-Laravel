@@ -8,7 +8,7 @@
     <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
         <div class="row">
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ url('admin/teacher/add-teacher') }}"> Create New Teacher</a>
+                <a class="btn btn-success" href="{{ url('admin/class/add-class') }}"> Create New Class</a>
             </div>
         </div>
         <div class="row">
@@ -36,35 +36,36 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Birthday</th>
-                                    <th>Email</th>
-                                    <th>Trạng thái</th>
-                                    <th>Action</th>
+                                    <th>Subject Name</th>
+                                    <th>Teacher Name</th>
+                                    <th>Semester</th>
+
+
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {{$i=0}}
                                 @foreach($data as $row)
-                                    @if($row->id !=1)
-                                        <tr>
+                                    <tr>
 
-                                            <td>{!!$row->id!!}</td>
-                                            <td>{!!$row->name!!}</td>
-                                            <td>{!!$row->birthday!!}</td>
-                                            <td>{!!$row->email!!}</td>
-                                            <td>
-                                            @if($row->status == 1)
-                                                Đã kích hoạt
+                                        <td>{!!$row->id!!}</td>
+                                        <td>
+                                            {!!App\Model\Subject::find($row->subject_id)->name!!}
+
+                                        </td>
+                                        <td>
+                                            @if($row->teacher_id != 1)
+                                                {!!App\Model\Teacher::find($row->teacher_id)->name!!}
+                                            @else
+                                                Chưa có
                                             @endif
-                                                Chưa kích hoạt
-                                            </td>
-                                            <td>
-                                                <a href="{!!url('admin/teacher/edit-teacher/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
-                                                <a href="{!!url('admin/student/info-student/'.$row->id)!!}" class="btn btn-success"><span>Info</span> </a>
-                                                <a href="{!!url('admin/teacher/delete-teacher/'.$row->id)!!}" class="btn btn-danger"><span>Remove</span> </a>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                        </td>
+                                        <td>{!!$row->semester!!}</td>
+                                        <td>
+                                            <a href="{!!url('admin/class/edit-class/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
+                                            <a href="{!!url('admin/class/delete-class/'.$row->id)!!}" class="btn btn-danger"><span>Remove</span> </a>
+                                        </td>
+                                    </tr>
                                 @endforeach
                                 </tbody>
                             </table>

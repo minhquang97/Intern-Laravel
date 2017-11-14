@@ -1,5 +1,6 @@
 <?php
 namespace App\Model;
+use function bcrypt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -20,5 +21,17 @@ class Student extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function create($data){
+       return Student::create([
+           'id' => $data->id,
+           'name' => $data->name,
+           'address' =>$data->address,
+           'birthday' => $data->birthday,
+           'class' => $data->class,
+           'password' => bcrypt($data->password),
+           'email' => $data->email,
+       ]);
+    }
 }
 

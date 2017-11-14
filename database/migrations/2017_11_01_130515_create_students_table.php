@@ -20,7 +20,8 @@ class CreateStudentsTable extends Migration
                         $table->string('email')->unique();
                         $table->string('password');
                         $table->string('address', 100);
-                        $table->string('class',20); 
+                        $table->string('class',20);
+                        $table->rememberToken();
                         $table->timestamps();
         });
     }
