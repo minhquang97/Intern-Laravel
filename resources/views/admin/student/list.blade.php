@@ -5,10 +5,10 @@
             {{ session('success') }}
         </div>
     @endif
-    <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
+    <div class="col-sm-9 col-sm-offset-1 col-lg-9 col-lg-offset-0 main">
         <div class="row">
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ url('admin/teacher/add-teacher') }}"> Create New Teacher</a>
+                <a class="btn btn-success" href="{{ url('admin/student/add-student') }}"> Create New Student</a>
             </div>
         </div>
         <div class="row">
@@ -39,32 +39,36 @@
                                     <th>Name</th>
                                     <th>Birthday</th>
                                     <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Class</th>
                                     <th>Trạng thái</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {{$i=0}}
                                 @foreach($data as $row)
-                                    @if($row->id !=1)
-                                        <tr>
+                                    <tr>
 
-                                            <td>{!!$row->id!!}</td>
-                                            <td>{!!$row->name!!}</td>
-                                            <td>{!!$row->birthday!!}</td>
-                                            <td>{!!$row->email!!}</td>
-                                            <td>
-                                            @if($row->status == 1)
-                                                Đã kích hoạt
-                                            @endif
-                                                Chưa kích hoạt
-                                            </td>
-                                            <td>
-                                                <a href="{!!url('admin/teacher/edit-teacher/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
-                                                <a href="{!!url('admin/student/info-student/'.$row->id)!!}" class="btn btn-success"><span>Info</span> </a>
-                                                <a href="{!!url('admin/teacher/delete-teacher/'.$row->id)!!}" class="btn btn-danger"><span>Remove</span> </a>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                        <td>{!!$row->id!!}</td>
+                                        <td>{!!$row->name!!}</td>
+                                        <td>{!!$row->birthday!!}</td>
+                                        <td>{!!$row->email!!}</td>
+                                        <td>{!!$row->address!!}</td>
+                                        <td>{!!$row->class!!}</td>
+                                        <td>
+                                        @if($row->status == 1)
+                                            Đã kích hoạt
+                                        @endif
+                                            Chưa kích hoạt
+                                        </td>
+                                        <td>
+                                            <a href="{!!url('admin/student/edit-student/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
+                                            <a href="{!!url('admin/student/info-student/'.$row->id)!!}" class="btn btn-success"><span>Info</span> </a>
+                                            <a href="{!!url('admin/student/delete-student/'.$row->id)!!}" class="btn btn-danger"><span>Remove</span> </a>
+
+                                        </td>
+                                    </tr>
                                 @endforeach
                                 </tbody>
                             </table>

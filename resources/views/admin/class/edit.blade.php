@@ -5,7 +5,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header"><small>Sửa thông tin giáo viên </small></h1>
+                <h1 class="page-header"><small>Sửa thông tin lớp </small></h1>
             </div>
         </div><!--/.row-->
         <div class="row">
@@ -28,7 +28,7 @@
                             </div>
 
                         @endif
-                        <form action="{{url('admin/teacher/edit-teacher/'.$data->id)}}" method="POST" role="form" enctype="multipart/form-data">
+                        <form action="{{url('admin/class/edit-class/'.$data->id)}}" method="POST" role="form" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
 
@@ -38,22 +38,14 @@
                                         ID : <input type="text" name="id" id="txtID" class="form-control" value="{!! old('id',isset($data["id"]) ? $data["id"] : null) !!}" required="required">
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Name : <input type="text" name="name" id="name" class="form-control" value="{!! old('name',isset($data->name) ? $data->name : null) !!}" required="required">
+                                        Kì học : <input type="text" name="semester" id="semester" class="form-control" value="{!! old('semester',isset($data->semester) ? $data->semester : null) !!}" required="required">
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Birthday : <input type="text" name="birthday" id="txtbirthday" class="form-control" value="{!! old('birthday',isset($data->birthday) ? $data->birthday : null) !!}" class="form-control">
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Email : <input type="text" name="email" id="txtemail" class="form-control" value="{!! old('email',isset($data->email) ? $data->email : null) !!}" class="form-control">
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Password : <input type="text" name="password" id="txtpassword" class="form-control" value="{!! old('password',isset($data->password) ? $data->password : null) !!}" class="form-control">
-                                    </div>
+
 
                                 </div>
                             </div>
 
-                            <input type="submit" name="btnCateAdd" class="btn btn-primary" value="Gửi chỉnh sửa" class="button" />
+                            <input type="submit" name="btnCateAdd" class="btn btn-primary" value="Update" class="button" />
                         </form>
                     </div>
                 </div>

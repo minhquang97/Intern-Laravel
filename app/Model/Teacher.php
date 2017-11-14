@@ -19,5 +19,15 @@ class Teacher extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function create($data){
+        return Teacher::create([
+            'id' => $data->id,
+            'name' => $data->name,
+            'birthday' => $data->birthday,
+            'password' => bcrypt($data->password),
+            'email' => $data->email,
+        ]);
+    }
     //
 }

@@ -19,6 +19,7 @@ class CreateTeachersTable extends Migration
             $table->date('birthday');
             $table->string('email')->unique();
             $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

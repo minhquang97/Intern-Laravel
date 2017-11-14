@@ -23,8 +23,9 @@ class RequestStudent extends FormRequest
     public function rules()
     {
         return [
-                'id' =>'required|numeric',
+                'id' =>'required|numeric|unique:students',
                 'name' => 'required|max:50|min:5|max:255',
+                'email' => 'required|unique:students',
                 'birthday' => 'required|date_format: "Y-m-d"',
                 'password' => 'required|min:6',
         ];
@@ -37,6 +38,7 @@ class RequestStudent extends FormRequest
     public function messages()
     {
         return [
+                'unique' => 'Duplicate :attribute',
                 'name.required' => 'Bạn phải nhập tên',
                 'birthday.required' => 'Sao không nhập email?',
                 'required' => ':attribute chưa nhập',
