@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Student;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestStudent;
+use App\Model\Classes;
 use App\Model\Student;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
+
 class StudentController extends Controller
 {
     /**
@@ -15,106 +19,33 @@ class StudentController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-    }
-    
-    public function index()
-    {
-      /*  $students = Student::latest()->paginate(10);
-        return view('student.index', ['students' => $students]);*/
-
-         $students = Student::latest()->paginate(2);
-        return view('student.index',compact('students'))
-            ->with('i', (request()->input('page', 1) - 1) * 2);
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('student.create');
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreStudent  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(RequestStudent $request)
-    {
-        Student::create($request->all());
-        return redirect()->route('student.index')
-                        ->with('success','Student created successfully');
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $student = Student::find($id);
-        return view('student.show',compact('student'));
-        //
-    }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $student = Student::find($id);
-        return view('student.edit',compact('student'));
-        //
-    }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(RequestStudent $request, $id)
-    {
-        Student::find($id)->update($request->all());
-        return redirect()->route('student.index')
-         ->with('success','Student updated successfully');
-        //
+        $this->middleware('student');
     }
 
-    public function search(Request $request)
-    {
-        $search = $request->name;
-        $students = DB::table('students')->where('name', $search)->paginate(10);
-        if(empty($search))
-            return redirect()->route('student.index')->with('danger','Please input for search student!!');
-        else if(empty($students)) return  redirect()->route('student.index')->with('danger','Student does not exist!!');
-        return view('student.index',compact('students'))->with([
-                                                                                'success' => 'Student search successfully',
-                                                                                'i' => (request()->input('page', 1) - 1) * 10,
-                                                                                ]);
+    public function classes() {
+        $data = Classes::latest()->paginate(5);
+        return view('student.class.register_class',compact('data'));
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
-  /*  public function search($name) 
-    {
-
-    }*/
-    public function destroy($id)
-    {
-         Student::find($id)->delete();
-        return redirect()->route('student.index')
-                ->with('success','Student deleted successfully');
-        //
+    public function listClass() {
+        $student = Auth::guard('student')->user();
+        $data = $student->classes;
+        return view('student.class.list-class', ['data' => $data]);
     }
+    public function registerClass($id) {
+        $student = Auth::guard('student')->user();
+        $classes = $student->classes;
+        foreach($classes as $clss)
+            if($clss->id == $id) return back()->with('danger','Class already registered');
+        $student->classes()->attach($id, ['score' => -1]);
+        return redirect()->action('Student\StudentController@listClass')->with('success', 'Register Class Successfully');
+    }
+
+    public function deleteClass($id) {
+        $student = Auth::guard('student')->user();
+        $class_id = Classes::where('id','=',$id)->first();
+        $student->classes()->detach($class_id);
+        return back()->with('success', 'Class delete successfully');
+    }
+
 }

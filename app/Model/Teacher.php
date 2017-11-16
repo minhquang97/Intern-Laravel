@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Teacher extends Authenticatable
 {
 	protected $fillable = [
-		'id' , 'name' , 'birthday' , 'email', 'password'
+		'id' , 'name' , 'birthday' , 'email', 'password',
 	];
 	public function classes()
 	{
@@ -19,15 +19,16 @@ class Teacher extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function create($data){
+    public $primaryKey = 'id';
+/*
+    public function create(array $data){
         return Teacher::create([
-            'id' => $data->id,
-            'name' => $data->name,
-            'birthday' => $data->birthday,
-            'password' => bcrypt($data->password),
-            'email' => $data->email,
+            'id' => $data['id'],
+            'name' => $data['name'],
+            'birthday' => $data['birthday'],
+            'password' => ($data['password']),
+            'email' => $data['email'],
         ]);
-    }
+    }*/
     //
 }

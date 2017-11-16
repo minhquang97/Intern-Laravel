@@ -14,5 +14,6 @@ class Subject extends Model
 	{
 		return $this->hasMany(Classes::class);
 	}
+    public $primaryKey = 'id';
     //
 }
