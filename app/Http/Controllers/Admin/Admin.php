@@ -6,6 +6,7 @@ use App\Http\Requests\RequestClass;
 use App\Http\Requests\RequestTeacher;
 use App\Model\Classes;
 use App\Model\Teacher;
+use function bcrypt;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestStudent;
@@ -23,7 +24,15 @@ class Admin extends Controller
 
     public function addTeacher(RequestTeacher $request)
     {
-        $teacher = Teacher::create($request->all());
+        $data = $request->all();
+        $teacher = new Teacher();
+        $data->id => $data['id']
+        $data->name => $data['name'],
+        $data->birthday => $data['birthday'],
+        $data->password => bcrypt($data['password']),
+        'email' => $data['email'],
+        $teacher->save();
+
         return redirect('admin/teacher/list-teacher')->with('success','Create Teacher Successfully');
     }
 

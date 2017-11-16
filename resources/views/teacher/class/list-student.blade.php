@@ -1,16 +1,12 @@
-@extends('admin.layouts.master')
+@extends('teacher.layouts.master')
 @section('content')
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
+    <h2>Danh sách học sinh</h2>
     <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
-        <div class="row">
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ url('admin/subject/add-subject') }}"> Create New Subject</a>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -35,30 +31,46 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Student ID</th>
                                     <th>Name</th>
-                                    <th>Credits</th>
+                                    <th>Email</th>
+                                    <th>Score</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
                                 @foreach($data as $row)
                                     <tr>
-                                        <td>{!!$row->id!!}</td>
-                                        <td>{!!$row->name!!}</td>
-                                        <td>{!!$row->credits!!}</td>
 
-                                        <td >
-                                            <a href="{!!url('admin/subject/edit-subject/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
-                                            <a href="{!!url('admin/subject/delete-subject/'.$row->id)!!}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');"><span>Remove</span> </a>
+                                        <td>{!!$row->id!!}</td>
+                                        <td>
+                                            {!!$row->name!!}
+
+                                        </td>
+                                        <td>{!!$row->email!!}</td>
+{{--
+                                        {{dd($row->classes)}}
+--}}
+                                        <td>@foreach($row->classes as $css)
+
+                                            @if($css->pivot->class_id == $classes_id)
+                                                    @if($css->pivot->score == -1)
+                                                        ----
+                                                    @else
+                                                        {{$css->pivot->score}}
+                                                        @endif
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <a href="{!!url('teacher/class/update-score/'.$row->id.'/'.$classes_id)!!}" title="Xem" class="btn btn-success" ><span >Update Score</span> </a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        {!! $data->render() !!}
+                        {{-- {!! $data->render() !!}--}}
                     </div>
                 </div>
             </div>

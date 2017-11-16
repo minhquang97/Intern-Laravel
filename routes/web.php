@@ -93,6 +93,30 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student', 'as' => 'student'
           return view('student.home');
       }]);
       Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
-
+      Route::get('class', ['as' => 'class', 'uses' => 'StudentController@classes']);
+      Route::get('class/list-class', ['as' => 'list-class', 'uses' => 'StudentController@listClass']);
+      Route::get('class/register-class/{id}', ['as' => 'register-class', 'uses' => 'StudentController@registerClass']);
+      Route::get('class/delete-class/{id}', ['as' => 'delete-class', 'uses' => 'StudentController@deleteClass']);
    });
 });
+
+Route::group(['namespace' => 'Teacher', 'prefix' => 'teacher', 'as' => 'teacher'], function(){
+    Route::group(['middleware' => 'guest'], function(){
+        Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
+        Route::post('login', ['as' => 'login', 'uses' => 'Auth\LoginController@login']);
+    });
+    Route::group(['middleware' => 'teacher'], function(){
+        Route::get('home', ['as' => 'home', function() {
+            return view('teacher.home');
+        }]);
+        Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
+        Route::get('class', ['as' => 'teacher-class', 'uses' => 'TeacherController@classes']);
+        Route::get('class/list-class', ['as' => 'teacher-list-class', 'uses' => 'TeacherController@listClass']);
+        Route::get('class/register-class/{id}', ['as' => 'teacher-register-class', 'uses' => 'TeacherController@registerClass']);
+        Route::get('class/delete-class/{id}', ['as' => 'teacher-delete-class', 'uses' => 'TeacherController@deleteClass']);
+        Route::get('class/list-student/{id}', ['as' => 'list-student', 'uses' => 'TeacherController@listStudent']);
+        Route::get('class/update-score/{id}/{classes_id}', 'TeacherController@getUpdateScore');
+        Route::post('class/update-score/{id}/{classes_id}', 'TeacherController@updateScore');
+    });
+});
+

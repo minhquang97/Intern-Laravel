@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class AuthenticateAdmin
+class AuthenticateTeacher
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class AuthenticateAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::guard('admin')->check())
-            return redirect('admin/login');
+        if(!Auth::guard('teacher')->check())
+            return redirect('teacher/login');
         return $next($request);
     }
 }

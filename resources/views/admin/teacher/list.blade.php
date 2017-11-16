@@ -61,7 +61,7 @@
                                             <td>
                                                 <a href="{!!url('admin/teacher/edit-teacher/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
                                                 <a href="{!!url('admin/student/info-student/'.$row->id)!!}" class="btn btn-success"><span>Info</span> </a>
-                                                <a href="{!!url('admin/teacher/delete-teacher/'.$row->id)!!}" class="btn btn-danger"><span>Remove</span> </a>
+                                                <a href="{!!url('admin/teacher/delete-teacher/'.$row->id)!!}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');"><span>Remove</span> </a>
                                             </td>
                                         </tr>
                                     @endif

@@ -30,6 +30,7 @@
                             </ul>
                         </div>
                     @endif
+
                     <div class="panel-body" style="font-size: 12px;">
                         <div class="table-responsive">
                             <table class="table table-hover">
@@ -39,8 +40,7 @@
                                     <th>Subject Name</th>
                                     <th>Teacher Name</th>
                                     <th>Semester</th>
-
-
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -63,14 +63,13 @@
                                         <td>{!!$row->semester!!}</td>
                                         <td>
                                             <a href="{!!url('admin/class/edit-class/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
-                                            <a href="{!!url('admin/class/delete-class/'.$row->id)!!}" class="btn btn-danger"><span>Remove</span> </a>
+                                            <a href="{!!url('admin/class/delete-class/'.$row->id)!!}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');"><span>Remove</span> </a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        {!! $data->render() !!}
                     </div>
                 </div>
             </div>

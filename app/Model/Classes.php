@@ -25,5 +25,6 @@ class Classes extends Model
 	   	return $this->belongsToMany(Student::class,'student_class','class_id','student_id')->withPivot('score');
     }
 
+    public $primaryKey = 'id';
     //
 }
