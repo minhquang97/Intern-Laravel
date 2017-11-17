@@ -63,7 +63,7 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            <a href="{!!url('teacher/class/update-score/'.$row->id.'/'.$classes_id)!!}" title="Xem" class="btn btn-success" ><span >Update Score</span> </a>
+                                            <a href="{!!route('teacher.class.update-score', ['id' => $row->id, 'classes_id' => $classes_id])!!}" title="Xem" class="btn btn-success" ><span >Update Score</span> </a>
                                         </td>
                                     </tr>
                                 @endforeach

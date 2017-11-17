@@ -35,7 +35,8 @@
                                     <th>Subject Name</th>
                                     <th>Semester</th>
                                     <th>Credits</th>
-                                    <th>Actions</th>
+                                    <th>View Class</th>
+                                    <th>Delete Class</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -51,8 +52,15 @@
                                         <td>{!!$row->semester!!}</td>
                                         <td>{!!App\Model\Subject::find($row->subject_id)->credits!!}</td>
                                         <td>
-                                            <a href="{!!url('teacher/class/list-student/'.$row->id)!!}" title="Xem" class="btn btn-info" ><span >More Info</span> </a>
-                                            <a href="{!!url('teacher/class/delete-class/'.$row->id)!!}" title="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');"><span >Delete</span> </a>
+                                            <a href="{!!route('teacher.class.list-student', ['id' => $row->id])!!}" title="Xem" class="btn btn-info"}}"><span >More Info</span> </a>
+                                        </td>
+                                        <td>
+                                            <form class="form-inline" method="POST" action="{!! route('teacher.class.delete-class', ['id' => $row->id]) !!}">
+                                                <input type="hidden" name="class_id" value="{{ $row->id }}">
+                                                <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+                                                {{ method_field('DELETE') }}
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
