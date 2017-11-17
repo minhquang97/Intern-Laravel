@@ -1,6 +1,6 @@
 @extends('teacher.layouts.master')
 @section('content')
-    <form action="{{url('teacher/class/update-score/'.$student->id.'/'.$classes_id)}}" method="POST">
+    <form action="{{route('teacher.class.post-update-score', ['id' => $student->id, 'classes_id' => $classes_id])}}" method="POST">
         {!! csrf_field() !!}
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 ">

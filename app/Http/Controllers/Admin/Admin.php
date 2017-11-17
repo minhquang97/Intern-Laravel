@@ -26,11 +26,11 @@ class Admin extends Controller
     {
         $data = $request->all();
         $teacher = new Teacher();
-        $data->id => $data['id']
-        $data->name => $data['name'],
-        $data->birthday => $data['birthday'],
-        $data->password => bcrypt($data['password']),
-        'email' => $data['email'],
+        $teacher->id = $data['id'];
+        $teacher->name = $data['name'];
+        $teacher->birthday = $data['birthday'];
+        $teacher->password = bcrypt($data['password']);
+        $teacher->email = $data['email'];
         $teacher->save();
 
         return redirect('admin/teacher/list-teacher')->with('success','Create Teacher Successfully');
