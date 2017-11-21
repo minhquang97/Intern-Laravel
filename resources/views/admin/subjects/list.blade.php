@@ -8,7 +8,7 @@
     <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
         <div class="row">
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ url('admin/subject/add-subject') }}"> Create New Subject</a>
+                <a class="btn btn-success" href="{{ route('admin.subject.get-add-subject') }}"> Create New Subject</a>
             </div>
         </div>
         <div class="row">
@@ -50,8 +50,16 @@
                                         <td>{!!$row->credits!!}</td>
 
                                         <td >
-                                            <a href="{!!url('admin/subject/edit-subject/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
-                                            <a href="{!!url('admin/subject/delete-subject/'.$row->id)!!}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');"><span>Remove</span> </a>
+                                            <a href="{!!route('admin.subject.get-edit-subject', ['id' => $row->id])!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
+                                            <a href="{!!route('admin.student.info-student', ['id' => $row->id])!!}" class="btn btn-success"><span>Info</span> </a>
+                                        </td>
+                                        <td>
+                                            <form class="form-inline" method="POST" action="{!! route('admin.subject.delete-subject', ['id' => $row->id]) !!}">
+                                                <input type="hidden" name="class_id" value="{{ $row->id }}">
+                                                <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+                                                {{ method_field('DELETE') }}
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

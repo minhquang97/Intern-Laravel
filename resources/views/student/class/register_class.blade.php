@@ -63,7 +63,7 @@
                                         <td>{!!$row->semester!!}</td>
                                         <td>{!!App\Model\Subject::find($row->subject_id)->credits!!}</td>
                                         <td>
-                                            <a href="{!!url('student/class/register-class/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Register</span> </a>
+                                            <a href="{!!route('student.class.register-class', ['id' => $row->id])!!}" title="Sửa" class="btn btn-info"><span >Register</span> </a>
                                         </td>
                                     </tr>
                                 @endforeach

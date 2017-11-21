@@ -19,6 +19,8 @@
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
+                background-image: url('https://img1.goodfon.com/original/1920x1080/d/38/league-of-legends-yasuo-lol.jpg');
+                background-size: cover;
             }
 
             .full-height {
@@ -46,11 +48,12 @@
             }
 
             .title {
+                color: #00bcd4;
                 font-size: 84px;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #00bcd4;
                 padding: 0 25px;
                 font-size: 12px;
                 font-weight: 600;
@@ -62,32 +65,22 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
         </style>
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    System Information of Student
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="{{route('admin.login')}}">Admin</a>
+                    <a href="{{route('student.login')}}">Student</a>
+                    <a href="{{route('teacher.login')}}">Teacher</a>
+
                 </div>
             </div>
         </div>

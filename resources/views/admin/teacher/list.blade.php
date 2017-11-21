@@ -59,9 +59,16 @@
                                                 Chưa kích hoạt
                                             </td>
                                             <td>
-                                                <a href="{!!url('admin/teacher/edit-teacher/'.$row->id)!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
-                                                <a href="{!!url('admin/student/info-student/'.$row->id)!!}" class="btn btn-success"><span>Info</span> </a>
-                                                <a href="{!!url('admin/teacher/delete-teacher/'.$row->id)!!}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');"><span>Remove</span> </a>
+                                                <a href="{!!route('admin.teacher.get-edit-teacher',['id' => $row->id])!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
+                                                <a href="{!!route('admin.teacher.info-teacher', ['id' => $row->id])!!}" class="btn btn-success"><span>Info</span> </a>
+                                            </td>
+                                            <td>
+                                                <form class="form-inline" method="POST" action="{!! route('admin.teacher.delete-teacher', ['id' => $row->id]) !!}">
+                                                    <input type="hidden" name="class_id" value="{{ $row->id }}">
+                                                    <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+                                                    {{ method_field('DELETE') }}
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                </form>
                                             </td>
                                         </tr>
                                     @endif

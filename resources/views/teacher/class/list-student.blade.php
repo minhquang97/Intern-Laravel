@@ -63,7 +63,14 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            <a href="{!!route('teacher.class.update-score', ['id' => $row->id, 'classes_id' => $classes_id])!!}" title="Xem" class="btn btn-success" ><span >Update Score</span> </a>
+                                            <form class="form-inline" method="POST" action="{{route('teacher.class.update-score', ['id' => $row->id, 'classes_id' => $classes_id])}}">
+                                                {{ csrf_field() }}
+                                                <div class="form-group">
+                                                    <label for="semester"></label>
+                                                    <input type="text" class="form-control" id="semester" placeholder="Enter Score" name="score">
+                                                    <button type="submit" class="btn btn-success">Update Score</button>
+                                                </div>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
