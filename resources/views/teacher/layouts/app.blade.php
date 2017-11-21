@@ -11,10 +11,18 @@
     <title>{{ config('app.name', 'Minh Quang') }}</title>
 
     <!-- Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{asset('css/boostrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
-
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            color:#000000;
+        }
+    </style>
 </head>
 <body>
 <div id="app">

@@ -18,8 +18,7 @@ class RequestClass extends FormRequest
     public function rules()
     {
         return [
-            'id' =>'required|numeric',
-            'subject_id' => 'required',
+            'id' =>'required|numeric|unique:classes',
             'semester' => 'required|numeric',
         ];
     }
@@ -33,6 +32,7 @@ class RequestClass extends FormRequest
         return [
             'required' => ':attribute chưa nhập',
             'numeric' => ':attribute only allow numeric',
+            'unique' => ':attribute already exist',
         ];
     }
 }

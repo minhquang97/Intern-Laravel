@@ -21,6 +21,8 @@ class CreateStudentsTable extends Migration
                         $table->string('password');
                         $table->string('address', 100);
                         $table->string('class',20);
+                        $table->boolean('status')->default(0);
+                        $table->string('email_token')->nullable();
                         $table->rememberToken();
                         $table->timestamps();
         });

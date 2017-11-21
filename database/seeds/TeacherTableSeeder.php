@@ -12,11 +12,12 @@ class TeacherTableSeeder extends Seeder
     public function run()
     {
         DB::table('teachers')->insert([
-            'name' => 'Teacher Root',
-            'email' => 'TeacherRoot@gmail.com',
+            'name' => 'Hoang Minh Quang Teacher',
+            'email' => 'quanghm@haposoft.com',
             'id' => '1',
             'birthday' => '1990-02-02',
             'password' => bcrypt('123456'),
+            'status' => '0',
         ]);
         //
     }

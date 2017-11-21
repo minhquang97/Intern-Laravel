@@ -7,6 +7,7 @@ use App\Http\Requests\RequestTeacher;
 use App\Model\Classes;
 use App\Model\Teacher;
 use function bcrypt;
+use function count;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestStudent;
@@ -26,14 +27,14 @@ class Admin extends Controller
     {
         $data = $request->all();
         $teacher = new Teacher();
-        $data->id => $data['id']
-        $data->name => $data['name'],
-        $data->birthday => $data['birthday'],
-        $data->password => bcrypt($data['password']),
-        'email' => $data['email'],
+        $teacher->id = $data['id'];
+        $teacher->name = $data['name'];
+        $teacher->birthday = $data['birthday'];
+        $teacher->password = bcrypt($data['password']);
+        $teacher->email = $data['email'];
         $teacher->save();
 
-        return redirect('admin/teacher/list-teacher')->with('success','Create Teacher Successfully');
+        return redirect()->route('admin.teacher.list-teacher')->with('success','Create Teacher Successfully');
     }
 
     public function editTeacher($id)
@@ -45,7 +46,7 @@ class Admin extends Controller
     public function postEditTeacher($request, $id)
     {
         Teacher::find($id)->update($request->all());
-        return redirect('admin/teacher/list-teacher')
+        return redirect()->route('admin.teacher.list-teacher')
             ->with('success','Teacher updated successfully');
     }
 
@@ -64,8 +65,17 @@ class Admin extends Controller
 
     public function addStudent(RequestStudent $request)
     {
-        $teacher = Student::create($request->all());
-        return redirect('admin/student/list-student')->with('success','Create Student Successfully');
+        $data = $request->all();
+        $student = new Student();
+        $student->id = $data['id'];
+        $student->name = $data['name'];
+        $student->birthday = $data['birthday'];
+        $student->password = bcrypt($data['password']);
+        $student->email = $data['email'];
+        $student->address = $data['address'];
+        $student->class = $data['class'];
+        $student->save();
+        return redirect()->route('admin.student.list-student')->with('success','Create Student Successfully');
     }
 
     public function editStudent($id)
@@ -77,7 +87,7 @@ class Admin extends Controller
     public function postEditStudent(Request $request, $id)
     {
         Student::find($id)->update($request->all());
-        return redirect('admin/student/list-student')
+        return redirect()->route('admin.student.list-student')
             ->with('success','Student updated successfully');
     }
 
@@ -97,7 +107,7 @@ class Admin extends Controller
     public function addSubject(RequestSubject $request)
     {
         $teacher = Subject::create($request->all());
-        return redirect('admin/subject/list-subject')->with('success','Create Subject Successfully');
+        return redirect()->route('admin.subject.list-subject')->with('success','Create Subject Successfully');
     }
 
     public function editSubject($id)
@@ -109,7 +119,7 @@ class Admin extends Controller
     public function postEditSubject(RequestSubject $request, $id)
     {
         Subject::find($id)->update($request->all());
-        return redirect('admin/subject/list-subject')
+        return redirect()->route('admin.subject.list-subject')
             ->with('success','Subject updated successfully');
     }
 
@@ -134,7 +144,7 @@ class Admin extends Controller
             'semester' => $request->semester,
             'teacher_id' => '1',
         ]);
-        return redirect('admin/class/list-class')->with('success','Create Class Successfully');
+        return redirect()->route('admin.class.list-class')->with('success','Create Class Successfully');
     }
 
     public function editClass($id)
@@ -146,7 +156,7 @@ class Admin extends Controller
     public function postEditClass(RequestClass $request, $id)
     {
         Classes::find($id)->update($request->all());
-        return redirect('admin/class/list-class')
+        return redirect()->route('admin.class.list-class')
             ->with('success','Class updated successfully');
     }
 
@@ -154,6 +164,46 @@ class Admin extends Controller
     {
         Classes::find($id)->delete();
         return back()->with('success','Delete Successfully');
+    }
+
+    public function infoStudent($id)
+    {
+        $student = Student::where('id','=',$id)->first();
+        $classStudent = DB::table('student_class')->join('classes', 'student_class.class_id', '=', 'classes.id')
+           ->where('student_id', '=', $id)->orderBy('semester')->get();
+        return view('admin.student.info', ['student' => $student, 'classStudents' => $classStudent]);
+    }
+    public function infoTeacher($id)
+    {
+        $teacher = Teacher::find($id);
+        $classes = DB::table('classes')->where('teacher_id', '=', $id)->get();
+        return view('admin.teacher.info', ['teacher' => $teacher,
+                                                 'classes' => $classes,]);
+    }
+
+    public function findAvg($id, Request $request)
+    {
+        $student = Student::where('id','=',$id)->first();
+        $classStudent = DB::table('student_class')->join('classes', 'student_class.class_id', '=', 'classes.id')
+            ->where('student_id', '=', $id)->where('semester', '=', $request->semester)->get();
+        $i = 0;
+        $avg = 0;
+        foreach($classStudent as $class)
+        {
+            $i++;
+            if($class->score >= 0)
+                $avg += $class->score;
+        }
+        if($i == 0)
+        {
+            return back()->with('danger', 'Semester is not exist!!');
+        }
+        $avg = $avg/$i;
+        return view('admin.student.info')->with(['classStudents' => $classStudent,
+                             'avg' => $avg,
+                             'success' => 'Successfully',
+                                'student' => $student,
+                            ]);
     }
     //
 }

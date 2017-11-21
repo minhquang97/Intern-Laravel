@@ -19,6 +19,8 @@ class CreateTeachersTable extends Migration
             $table->date('birthday');
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('status')->default(0);
+            $table->string('email_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

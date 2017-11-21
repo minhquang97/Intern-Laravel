@@ -35,16 +35,24 @@ class StudentController extends Controller
     public function registerClass($id) {
         $student = Auth::guard('student')->user();
         $classes = $student->classes;
-        foreach($classes as $clss)
-            if($clss->id == $id) return back()->with('danger','Class already registered');
+        $css = Classes::find($id);
+        foreach($classes as $class)
+        {
+            if($class->id == $id) return back()->with('danger','Class already registered!!');
+            else if($class->subject_id == $css->subject_id)
+            {
+                return back()->with('danger', 'Subject already registered!! You can not register two class with same subject!!');
+            }
+        }
+
         $student->classes()->attach($id, ['score' => -1]);
-        return redirect()->action('Student\StudentController@listClass')->with('success', 'Register Class Successfully');
+        return redirect()->route('student.class.list-class')->with('success', 'Register Class Successfully');
     }
 
     public function deleteClass($id) {
         $student = Auth::guard('student')->user();
-        $class_id = Classes::where('id','=',$id)->first();
-        $student->classes()->detach($class_id);
+        $class = Classes::where('id','=',$id)->first();
+        $student->classes()->detach($class->id);
         return back()->with('success', 'Class delete successfully');
     }
 

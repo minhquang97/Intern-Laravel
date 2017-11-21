@@ -28,7 +28,7 @@
                             </div>
 
                         @endif
-                        <form action="{{url('admin/class/edit-class/'.$data->id)}}" method="POST" role="form" enctype="multipart/form-data">
+                        <form action="{{route('admin.class.post-edit-class', ['id' => $data->id])}}" method="POST" role="form" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
 

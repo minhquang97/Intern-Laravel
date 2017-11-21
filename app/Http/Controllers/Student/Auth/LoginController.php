@@ -59,7 +59,7 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect('student/login');
+        return redirect()->route('student.login');
     }
 
     public function __construct()

@@ -59,7 +59,12 @@
                                         <td>{!!$row->semester!!}</td>
                                         <td>{!!App\Model\Subject::find($row->subject_id)->credits!!}</td>
                                         <td>
-                                            <a href="{!!url('student/class/delete-class/'.$row->id)!!}" title="Sửa" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');"><span >Delete</span> </a>
+                                            <form class="form-inline" method="POST" action="{!! route('student.class.delete-class', ['id' => $row->id]) !!}">
+                                                <input type="hidden" name="class_id" value="{{ $row->id }}">
+                                                <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+                                                {{ method_field('DELETE') }}
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
