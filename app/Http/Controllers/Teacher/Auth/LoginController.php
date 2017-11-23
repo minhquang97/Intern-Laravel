@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Model\Teacher;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,17 +47,24 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        $remember_token = $request->has('remember_token') ? true : false;
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1', 'remember_token' => $remember_token])) {
             // Authentication passed...
-            return redirect()->intended(route('teacher.home'))->with('success','You are login');
+            return redirect()->intended(route('teacher.home'));
         }
+        return redirect()->route('teacher.login')->withErrors('Email or password incorrect!!');
     }
+
+    public function verify($token)
+    {
+        Teacher::where('email_token', '=', $token)->firstOrFail()->verified();
+        return redirect()->route('teacher.login')->with('success','Your account has been activated!!');
+    }
+
 
     public function logout(Request $request)
     {
         $this->guard()->logout();
-
-        $request->session()->invalidate();
 
         return redirect('teacher/login');
     }

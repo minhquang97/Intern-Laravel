@@ -21,7 +21,15 @@ class Student extends Authenticatable
     protected $hidden = [
          'remember_token', 'password',
     ];
+
     public $primaryKey = 'id';
+
+    public function verified()
+    {
+        $this->status = 1;
+        $this->email_token = null;
+        $this->save();
+    }
 
     /*public function create($data){
        return Student::create([

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RequestClass;
 use App\Http\Requests\RequestTeacher;
+use App\Mail\StudentVerification;
+use App\Mail\TeacherVerification;
 use App\Model\Classes;
 use App\Model\Teacher;
 use function bcrypt;
@@ -15,6 +17,10 @@ use App\Model\Student;
 use App\Model\Subject;
 use App\Http\Requests\RequestSubject;
 use DB;
+use function str_random;
+use Illuminate\Support\Facades\Mail;
+
+
 class Admin extends Controller
 {
     public function listTeacher()
@@ -32,8 +38,10 @@ class Admin extends Controller
         $teacher->birthday = $data['birthday'];
         $teacher->password = bcrypt($data['password']);
         $teacher->email = $data['email'];
+        $teacher->email_token = str_random(15);
+        $email = new TeacherVerification($teacher);
+        Mail::to($teacher)->send($email);
         $teacher->save();
-
         return redirect()->route('admin.teacher.list-teacher')->with('success','Create Teacher Successfully');
     }
 
@@ -74,6 +82,9 @@ class Admin extends Controller
         $student->email = $data['email'];
         $student->address = $data['address'];
         $student->class = $data['class'];
+        $student->email_token = str_random(15);
+        $email = new StudentVerification($student);
+        Mail::to($student)->send($email);
         $student->save();
         return redirect()->route('admin.student.list-student')->with('success','Create Student Successfully');
     }
