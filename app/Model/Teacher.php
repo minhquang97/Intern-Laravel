@@ -20,6 +20,13 @@ class Teacher extends Authenticatable
         'password', 'remember_token',
     ];
     public $primaryKey = 'id';
+
+    public function verified()
+    {
+        $this->status = 1;
+        $this->email_token = null;
+        $this->save();
+    }
 /*
     public function create(array $data){
         return Teacher::create([

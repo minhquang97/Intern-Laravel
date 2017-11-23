@@ -35,7 +35,7 @@
                     Student-System
                 </a>
             </div>
-            @if(Auth::guard('admin')->check())
+            @if(Auth::guard('student')->check())
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -43,7 +43,7 @@
                                 {!!Auth::guard('student')->user()->name!!}
                             @endif <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('student/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            <li><a href="{{ route('student.logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                         </ul>
                     </li>
 

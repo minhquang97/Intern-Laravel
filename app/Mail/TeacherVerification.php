@@ -31,6 +31,6 @@ class TeacherVerification extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.teacher-verification');
+        return $this->view('emails.teacher-verification');
     }
 }

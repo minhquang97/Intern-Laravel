@@ -87,6 +87,7 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student', 'as' => 'student.
    Route::group(['middleware' => 'guest'], function(){
        Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
        Route::post('login', ['as' => 'post-login', 'uses' => 'Auth\LoginController@login']);
+       Route::get('verify/{token}', ['as' => 'verify', 'uses' => 'Auth\LoginController@verify']);
    });
    Route::group(['middleware' => 'student'], function(){
       Route::get('home', ['as' => 'home', function() {
@@ -104,6 +105,8 @@ Route::group(['namespace' => 'Teacher', 'prefix' => 'teacher', 'as' => 'teacher.
     Route::group(['middleware' => 'guest'], function(){
         Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
         Route::post('login', ['as' => 'post-login', 'uses' => 'Auth\LoginController@login']);
+        Route::get('verify/{token}', ['as' => 'verify', 'uses' => 'Auth\LoginController@verify']);
+
     });
     Route::group(['middleware' => 'teacher'], function(){
         Route::get('home', ['as' => 'home', function() {

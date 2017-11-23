@@ -20,15 +20,15 @@
 <div id="app">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
-            @if(Auth::guard('admin')->check())
+            @if(Auth::guard('teacher')->check())
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <li class="dropdown pull-right">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            @if (isset(Auth::guard('admin')->user()->name) )
-                                {!!Auth::guard('admin')->user()->name!!}
+                            @if (isset(Auth::guard('teacher')->user()->name) )
+                                {!!Auth::guard('teacher')->user()->name!!}
                             @endif <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('student/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            <li><a href="{{ url('teacher/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                         </ul>
                     </li>
 

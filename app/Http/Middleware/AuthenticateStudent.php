@@ -18,6 +18,8 @@ class AuthenticateStudent
     {
         if(!Auth::guard('student')->check())
            return redirect()->route('student.login');
+        if(Auth::guard('student')->user()->status == 0)
+            return redirect()->route('student.login')->withErrors('Please active your account in your email');
         return $next($request);
     }
 }
