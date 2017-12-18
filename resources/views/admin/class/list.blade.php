@@ -5,10 +5,20 @@
             {{ session('success') }}
         </div>
     @endif
-    <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
+    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-0 main">
         <div class="row">
-            <div class="pull-right">
+            <div class="col-sm-offset-6 col-sm-2 col-lg-offset-6 col-lg-2" >
                 <a class="btn btn-success" href="{{ route('admin.class.get-add-class') }}"> Create New Class</a>
+            </div>
+            <div class="col-sm-offset-0 col-sm-3 col-lg-offset-0 col-lg-4">
+                <form class="form-inline" method="POST" action="{{route('admin.class.search-class')}}">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="nameOrId"></label>
+                        <input type="text" class="form-control" id="nameOrId" placeholder="Class Name or ID" name="nameOrId" required="required">
+                        <button type="submit" class="btn btn-success">Search Class</button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -62,7 +72,7 @@
                                         <td>{!!$row->semester!!}</td>
                                         <td>
                                             <a href="{!!route('admin.class.get-edit-class', ['id' => $row->id])!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
-                                            <a href="{!!route('admin.student.info-student', ['id' => $row->id])!!}" class="btn btn-success"><span>Info</span> </a>
+                                            <a href="{!!route('admin.class.info-class', ['id' => $row->id])!!}" class="btn btn-success"><span>Info</span> </a>
                                         </td>
                                         <td>
                                             <form class="form-inline" method="POST" action="{!! route('admin.class.delete-class', ['id' => $row->id]) !!}">
@@ -76,6 +86,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{$data->links()}}
                         </div>
                     </div>
                 </div>

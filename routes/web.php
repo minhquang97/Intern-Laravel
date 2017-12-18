@@ -25,9 +25,10 @@ Route::get('/callback', 'SocialAuthFacebookController@callback');
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], function(){
     Route::group(['middleware' => 'guest'], function(){
         Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
-        Route::post('login', ['as' => 'post-login', 'uses' => 'Auth\LoginController@login']);
+        Route::post('login', ['as' => 'post-login', 'uses' => 'Auth\LoginController@authenticate']);
     });
     Route::group(['middleware' =>  'admin'], function(){
+
         Route::get('home', ['as' =>'home', function(){
             return view('admin.home');
         }]);
@@ -35,14 +36,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
         Route::group(['prefix' => 'teacher', 'as' => 'teacher.'], function(){
             Route::get('list-teacher', ['as' => 'list-teacher', 'uses' => 'Admin@listTeacher']);
-            Route::get('add-teacher', function(){
+            Route::get('add-teacher', [ 'as' => 'add-teacher', function(){
                 return view('admin.teacher.add');
-            })->name('admin.teacher.get-add-teacher');
+            }]);
             Route::post('add-teacher',['as' => 'post-add-teacher', 'uses' =>'Admin@addTeacher']);
             Route::get('edit-teacher/{id}', ['as' => 'get-edit-teacher','uses' => 'Admin@editTeacher']);
             Route::post('edit-teacher/{id}', ['as' => 'post-edit-teacher','uses' => 'Admin@postEditTeacher']);
             Route::get('info-teacher/{id}', ['as' => 'info-teacher', 'uses' => 'Admin@infoTeacher']);
             Route::delete('delete-teacher/{id}',['as' => 'delete-teacher', 'uses' => 'Admin@deleteTeacher']);
+            Route::post('search-teacher', ['as' => 'search-teacher', 'uses' => 'Admin@searchTeacher']);
+
         });
 
         Route::group(['prefix' => 'student', 'as' => 'student.'], function(){
@@ -56,6 +59,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::get('info-student/{id}', ['as' => 'info-student', 'uses' => 'Admin@infoStudent']);
             Route::delete('delete-student/{id}',['as' => 'delete-student', 'uses' => 'Admin@deleteStudent']);
             Route::post('info-student/find-avg/{id}', ['as' => 'find-avg', 'uses' => 'Admin@findAvg']);
+            Route::post('search-student', ['as' => 'search-student', 'uses' => 'Admin@searchStudent']);
         });
 
         Route::group(['prefix' => 'subject', 'as' => 'subject.'], function(){
@@ -67,6 +71,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::get('edit-subject/{id}', ['as' => 'get-edit-subject','uses' => 'Admin@editSubject']);
             Route::post('edit-subject/{id}', ['as' => 'post-edit-subject','uses' => 'Admin@postEditSubject']);
             Route::delete('delete-subject/{id}',['as' => 'delete-subject', 'uses' => 'Admin@deleteSubject']);
+            Route::post('search-subject', ['as' => 'search-subject', 'uses' => 'Admin@searchSubject']);
+            Route::get('info-subject/{id}', ['as' => 'info-subject', 'uses' => 'Admin@infoSubject']);
         });
 
         Route::group(['prefix' => 'class', 'as' => 'class.'], function(){
@@ -79,6 +85,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
             Route::get('edit-class/{id}', ['as' => 'get-edit-class','uses' => 'Admin@editClass']);
             Route::post('edit-class/{id}', ['as' => 'post-edit-class','uses' => 'Admin@postEditClass']);
             Route::delete('delete-class/{id}',['as' => 'delete-class', 'uses' => 'Admin@deleteClass']);
+            Route::post('search-class', ['as' => 'search-class', 'uses' => 'Admin@searchClass']);
+            Route::get('info-class/{id}', ['as' => 'info-class', 'uses' => 'Admin@infoClass']);
         });
     });
 });
@@ -86,8 +94,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], fu
 Route::group(['namespace' => 'Student', 'prefix' => 'student', 'as' => 'student.'], function(){
    Route::group(['middleware' => 'guest'], function(){
        Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
-       Route::post('login', ['as' => 'post-login', 'uses' => 'Auth\LoginController@login']);
+       Route::post('login', ['as' => 'post-login', 'uses' => 'Auth\LoginController@authenticate']);
        Route::get('verify/{token}', ['as' => 'verify', 'uses' => 'Auth\LoginController@verify']);
+       Route::get('password_reset', ['as' => 'password_reset', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
+       Route::post('email', ['as' => 'email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
+       Route::get('get-reset/{token}', ['as' => 'get-reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
+       Route::post('reset', ['as' => 'reset', 'uses' =>'Auth\ResetPasswordController@reset']);
    });
    Route::group(['middleware' => 'student'], function(){
       Route::get('home', ['as' => 'home', function() {
@@ -98,15 +110,23 @@ Route::group(['namespace' => 'Student', 'prefix' => 'student', 'as' => 'student.
       Route::get('class/list-class', ['as' => 'class.list-class', 'uses' => 'StudentController@listClass']);
       Route::get('class/register-class/{id}', ['as' => 'class.register-class', 'uses' => 'StudentController@registerClass']);
       Route::delete('class/delete-class/{id}', ['as' => 'class.delete-class', 'uses' => 'StudentController@deleteClass']);
+      Route::post('class/search-class', ['as' => 'class.search-class', 'uses' => 'StudentController@searchClass']);
+      Route::get('get-update-info',['as' => 'get-update-info', 'uses' => 'StudentController@getUpdateInfo']);
+      Route::post('update-info', ['as' => 'update-info', 'uses' => 'StudentController@updateInfo']);
+      Route::get('change-password', ['as' => 'change-password' , 'uses' => 'StudentController@changePassword']);
+      Route::post('post-change-password',['as' => 'post-change-password', 'uses' => 'StudentController@postChangePassword']);
    });
 });
 
 Route::group(['namespace' => 'Teacher', 'prefix' => 'teacher', 'as' => 'teacher.'], function(){
     Route::group(['middleware' => 'guest'], function(){
         Route::get('login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
-        Route::post('login', ['as' => 'post-login', 'uses' => 'Auth\LoginController@login']);
+        Route::post('login', ['as' => 'post-login', 'uses' => 'Auth\LoginController@authenticate']);
         Route::get('verify/{token}', ['as' => 'verify', 'uses' => 'Auth\LoginController@verify']);
-
+        Route::get('get-reset/{token}', ['as' => 'get-reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
+        Route::post('reset', ['as' => 'reset', 'uses' =>'Auth\ResetPasswordController@reset']);
+        Route::get('password_reset', ['as' => 'password_reset', 'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm']);
+        Route::post('email', ['as' => 'email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
     });
     Route::group(['middleware' => 'teacher'], function(){
         Route::get('home', ['as' => 'home', function() {
@@ -119,6 +139,11 @@ Route::group(['namespace' => 'Teacher', 'prefix' => 'teacher', 'as' => 'teacher.
         Route::delete('class/delete-class/{id}', ['as' => 'class.delete-class', 'uses' => 'TeacherController@deleteClass']);
         Route::get('class/list-student/{id}', ['as' => 'class.list-student', 'uses' => 'TeacherController@listStudent']);
         Route::post('class/update-score/{id}/{classes_id}', ['as' => 'class.update-score', 'uses' => 'TeacherController@updateScore']);
+        Route::post('class/search-class', ['as' => 'class.search-class', 'uses' => 'TeacherController@searchClass']);
+        Route::get('get-update-info',['as' => 'get-update-info', 'uses' => 'TeacherController@getUpdateInfo']);
+        Route::post('update-info', ['as' => 'update-info', 'uses' => 'TeacherController@updateInfo']);
+        Route::get('change-password', ['as' => 'change-password' , 'uses' => 'TeacherController@changePassword']);
+        Route::post('post-change-password',['as' => 'post-change-password', 'uses' => 'TeacherController@postChangePassword']);
     });
 });
 

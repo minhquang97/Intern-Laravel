@@ -41,19 +41,19 @@
                                         Name : <input type="text" name="name" id="name" class="form-control" value="{!! old('name',isset($data->name) ? $data->name : null) !!}" required="required">
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Birthday : <input type="text" name="birthday" id="txtbirthday" class="form-control" value="{!! old('birthday',isset($data->birthday) ? $data->birthday : null) !!}" class="form-control">
+                                        Birthday : <input type="text" name="birthday" id="txtbirthday" class="form-control" value="{!! old('birthday',isset($data->birthday) ? $data->birthday : null) !!}" >
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Email : <input type="text" name="email" id="txtemail" class="form-control" value="{!! old('email',isset($data->email) ? $data->email : null) !!}" class="form-control">
+                                        Email : <input type="text" name="email" id="txtemail" class="form-control" value="{!! old('email',isset($data->email) ? $data->email : null) !!}">
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Password : <input type="text" name="password" id="txtpassword" class="form-control" value="{!! old('password',isset($data->password) ? $data->password : null) !!}" class="form-control">
+                                        Password : <input type="text" name="password" id="txtpassword" class="form-control" >
                                     </div>
 
                                 </div>
                             </div>
 
-                            <input type="submit" name="btnCateAdd" class="btn btn-primary" value="Gửi chỉnh sửa" class="button" />
+                            <input type="submit" name="btnCateAdd" class="btn btn-primary" value="Gửi chỉnh sửa" />
                         </form>
                     </div>
                 </div>

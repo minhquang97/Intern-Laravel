@@ -3,6 +3,9 @@ namespace App\Model;
 use function bcrypt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\StudentResetPasswordNotification;
+
 
 /**
  * @property \Carbon\Carbon $created_at
@@ -12,7 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Student extends Authenticatable
 {
     protected $fillable = ['id' , 'name' , 'birthday' , 'address' , 'class', 'email', 'password',];
-
+    use Notifiable;
     public function classes()
     {
     	return $this->belongsToMany(Classes::class,'student_class','student_id','class_id')->withPivot('score');
@@ -31,6 +34,10 @@ class Student extends Authenticatable
         $this->save();
     }
 
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new StudentResetPasswordNotification($token));
+    }
     /*public function create($data){
        return Student::create([
            'id' => $data->id,

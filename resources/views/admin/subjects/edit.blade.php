@@ -41,7 +41,7 @@
                                         Name : <input type="text" name="name" id="name" class="form-control" value="{!! old('name',isset($data->name) ? $data->name : null) !!}" required="required">
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Birthday : <input type="text" name="credits" id="credits" class="form-control" value="{!! old('credits',isset($data->credits) ? $data->credits : null) !!}" class="form-control">
+                                        Credits : <input type="text" name="credits" id="credits" class="form-control" value="{!! old('credits',isset($data->credits) ? $data->credits : null) !!}" class="form-control">
                                     </div>
 
                                 </div>

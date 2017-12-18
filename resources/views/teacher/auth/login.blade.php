@@ -16,7 +16,6 @@
                 {!! Session::get('flash_massage') !!}
             </ul>
         </div>
-    @elseif(Session()->has('success'))
         <div class="alert alert-success">
             <ul>
                 {!! Session::get('success') !!}
@@ -77,7 +76,7 @@
                                         Login
                                     </button>
 
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link" href="{{ route('teacher.password_reset') }}">
                                         Forgot Your Password?
                                     </a>
                                 </div>

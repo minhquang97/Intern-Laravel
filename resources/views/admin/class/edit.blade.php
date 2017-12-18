@@ -35,9 +35,6 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        ID : <input type="text" name="id" id="txtID" class="form-control" value="{!! old('id',isset($data["id"]) ? $data["id"] : null) !!}" required="required">
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                         Kì học : <input type="text" name="semester" id="semester" class="form-control" value="{!! old('semester',isset($data->semester) ? $data->semester : null) !!}" required="required">
                                     </div>
 

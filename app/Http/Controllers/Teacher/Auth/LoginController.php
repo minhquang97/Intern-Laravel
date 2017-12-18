@@ -33,7 +33,7 @@ class LoginController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @return
      */
     protected function guard()
     {
@@ -47,8 +47,8 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        $remember_token = $request->has('remember_token') ? true : false;
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1', 'remember_token' => $remember_token])) {
+        $remember = $request->has('remember_token') ? true : false;
+        if (Auth::guard('teacher')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1', 'remember_token' => $remember])) {
             // Authentication passed...
             return redirect()->intended(route('teacher.home'));
         }

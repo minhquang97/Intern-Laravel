@@ -5,10 +5,20 @@
             {{ session('success') }}
         </div>
     @endif
-    <div class="col-sm-9 col-sm-offset-1 col-lg-9 col-lg-offset-0 main">
+    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-0 main">
         <div class="row">
-            <div class="pull-right">
+            <div class="col-sm-offset-6 col-sm-2 col-lg-offset-6 col-lg-2" >
                 <a class="btn btn-success" href="{{ url('admin/student/add-student') }}"> Create New Student</a>
+            </div>
+            <div class="col-sm-offset-0 col-sm-3 col-lg-offset-0 col-lg-4">
+                <form class="form-inline" method="POST" action="{{route('admin.student.search-student')}}">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="nameOrId"></label>
+                        <input type="text" class="form-control" id="nameOrId" placeholder="Student Name or Student ID" name="nameOrId" required="required">
+                        <button type="submit" class="btn btn-success">Search Student</button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -41,6 +51,7 @@
                                     <th>Email</th>
                                     <th>Address</th>
                                     <th>Class</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -54,6 +65,12 @@
                                         <td>{!!$row->email!!}</td>
                                         <td>{!!$row->address!!}</td>
                                         <td>{!!$row->class!!}</td>
+                                        <td>
+                                            @if(!$row->status)
+                                            <span style="color: red;">Chưa kích hoạt</span>
+                                        @else <span style="color: #2a88bd;"> Đã kích hoạt</span>
+                                        @endif
+                                        </td>
                                         <td>
                                             <a href="{!!route('admin.student.get-edit-student', ['id' => $row->id])!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
                                             <a href="{!!route('admin.student.info-student', ['id' => $row->id])!!}" class="btn btn-success"><span>Info</span> </a>
@@ -70,8 +87,8 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{$data->links()}}
                         </div>
-                        {!! $data->render() !!}
                     </div>
                 </div>
             </div>

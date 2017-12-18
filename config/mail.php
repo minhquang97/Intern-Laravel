@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => 'quanghm@haposoft.com',
+        'address' => 'quanghoang4334@gmail.com',
         'name' => 'Minh Quang',
     ],
 

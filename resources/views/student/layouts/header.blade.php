@@ -44,6 +44,7 @@
                             @endif <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('student.logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            <li><a href="{{route('student.change-password')}}"> Change Password </a></li>
                         </ul>
                     </li>
 

@@ -10,7 +10,19 @@
             {{ session('danger') }}
         </div>
     @endif
-    <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
+    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-0 main">
+        <div class="row">
+            <div class="col-sm-offset-7 col-sm-3 col-lg-offset-7 col-lg-4">
+                <form class="form-inline" method="POST" action="{{route('teacher.class.search-class')}}">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="nameOrId"></label>
+                        <input type="text" class="form-control" id="nameOrId" placeholder="Class Name or ID" name="nameOrId" required="required">
+                        <button type="submit" class="btn btn-success">Search Class</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -49,18 +61,18 @@
 
                                         <td>{!!$row->id!!}</td>
                                         <td>
-                                            {!!App\Model\Subject::find($row->subject_id)->name!!}
+                                            {!!$row->subject->name!!}
 
                                         </td>
                                         <td>
                                             @if($row->teacher_id != 1)
-                                                {!!App\Model\Teacher::find($row->teacher_id)->name!!}
+                                                {!!$row->teacher->name!!}
                                             @else
                                                 Chưa có
                                             @endif
                                         </td>
                                         <td>{!!$row->semester!!}</td>
-                                        <td>{!!App\Model\Subject::find($row->subject_id)->credits!!}</td>
+                                        <td>{!!$row->subject->credits!!}</td>
                                         <td>
                                             <a href="{!!route('teacher.class.register-class', ['id' => $row->id])!!}" title="Sửa" class="btn btn-info"><span >Register</span> </a>
                                         </td>
@@ -68,8 +80,8 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{$data->links()}}
                         </div>
-                        {!! $data->render() !!}
                     </div>
                 </div>
             </div>

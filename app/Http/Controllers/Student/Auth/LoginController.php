@@ -55,7 +55,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $remember_token = $request->has('remember_token') ? true : false;
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'])) {
+        if (Auth::guard('student')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'])) {
             // Authentication passed...
             return redirect()->intended(route('student.home'));
         }

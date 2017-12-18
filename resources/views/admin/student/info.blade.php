@@ -34,7 +34,7 @@
                         {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="semester"></label>
-                                <input type="text" class="form-control" id="semester" placeholder="Enter Semester" name="semester">
+                                <input type="text" class="form-control" id="semester" placeholder="Enter Semester" name="semester" required="required">
                                 <button type="submit" class="btn btn-success">Find Avg Score</button>
                             </div>
                         </form>
@@ -84,6 +84,9 @@
                             <th>Class ID</th>
                             {{--<th>Subject Name</th>--}}
                             <th>Subject ID</th>
+                            <th>Subject Name</th>
+                            <th>Teacher Name</th>
+                            <th>Teacher ID</th>
                             <th>Semester</th>
                             <th>Score</th>
                         </tr>
@@ -93,20 +96,27 @@
                                     <tr>
                                         <td>{!! $class->id !!}</td>
                                         <td>{!! $class->subject_id !!}</td>
+                                        <td>{!! $class->subject->name !!}</td>
+                                        @if($class->teacher->id != 1)
+                                        <td>{!! $class->teacher->name !!}</td>
+                                        <td>{!! $class->teacher->id !!}</td>
+                                        @else
+                                            <td style="color:red;">Chưa có</td>
+                                            <td style="color:red;">Chưa có</td>
+                                        @endif
                                         <td>{!! $class->semester !!}</td>
-                                                @if($class->score != -1)
-                                        <td>{!! $class->score !!}</td>
+                                                @if($class->pivot->score != -1)
+                                        <td>{!! $class->pivot->score !!}</td>
                                                 @else
-                                                    <td> chưa có điểm</td>
+                                                    <td style="color:red;"> chưa có điểm</td>
                                                 @endif
                                     </tr>
                                 @endforeach
                                 @if(!!isset($avg))
                                 <tr style="border-top: solid #000000">
                                     <td>AVG</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{$avg}}</td>
+                                    <td></td><td></td><td></td><td></td><td></td>
+                                    <td style="color:forestgreen;">{{$avg}}</td>
                                 </tr>
                                     @endif
                         </tbody>

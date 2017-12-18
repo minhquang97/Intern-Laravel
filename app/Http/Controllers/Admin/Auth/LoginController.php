@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Validation\ValidationException;
+use function redirect;
 
 class LoginController extends Controller
 {
@@ -31,10 +32,14 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/admin/home';
 
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @return
      */
     protected function guard()
     {
@@ -46,12 +51,15 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
-    public function authenticate(Request $request, $user)
+    public function authenticate(Request $request)
     {
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+
+        $remember = $request->has('remember_token') ? true : false;
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
             // Authentication passed...
-            return redirect()->intended(route('admin.home'));
+            return redirect()->intended('admin/home');
         }
+        return back()->withErrors('Login Failed!!');
     }
 
     public function logout(Request $request)
@@ -61,8 +69,5 @@ class LoginController extends Controller
         return redirect()->route('admin.login');
     }
 
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+
 }
