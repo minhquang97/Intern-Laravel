@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Student extends Model
 {
-    protected $fillable = ['name', 'birthday', 'address', 'class'];
+    protected $fillable = ['id' , 'name' , 'birthday' , 'address' , 'class'];
+
+    public function classes()
+    {
+    	return $this->belongsToMany(Classes::class,'student_class','student_id','class_id')->withPivot('score');
+    }
 }
 

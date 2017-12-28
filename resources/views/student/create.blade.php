@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('content')
     <div class="row">
@@ -8,6 +8,7 @@
             </div>
             <div class="pull-right">
                 <a class="btn btn-primary" href="{{ route('student.index') }}"> Back </a>
+                   
             </div>
         </div>
     </div>
@@ -25,6 +26,7 @@
             </ul>
             Mời nhập lại
         </div>
+
     @endif
 
     {!! Form::open(array ('route' => 'student.store' , 'method'=>'POST')) !!}

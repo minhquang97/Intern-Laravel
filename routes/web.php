@@ -15,4 +15,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('student/search' , 'StudentController@search');
+
+
 Route::resource('student', 'StudentController');
+
+
+Route::get('/view',function() {
+	return view('welcome');
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/testdb','TestEloquent@testdb');
+
+Route::get('/redirect', 'SocialAuthFacebookController@redirect');
+Route::get('/callback', 'SocialAuthFacebookController@callback');	

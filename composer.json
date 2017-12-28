@@ -8,11 +8,13 @@
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
+        "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.5",
         "phpunit/phpunit-selenium": "^4.1"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.1",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
@@ -55,4 +57,12 @@
         "sort-packages": true,
         "optimize-autoloader": true
     }
+    ,
+   "repositories": [
+    {
+    "type": "composer",
+    "url": "https://packagist.org"
+    },
+    { "packagist": false }
+    ]
 }

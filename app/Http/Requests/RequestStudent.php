@@ -23,8 +23,9 @@ class RequestStudent extends FormRequest
     public function rules()
     {
         return [
-                'name' => 'required|max:50|min:5',
-                'birthday' => 'required',
+                'id' =>'required|numeric',
+                'name' => 'required|max:50|min:5|regex:/^[a-zA-Z]+$/u|max:255',
+                'birthday' => 'required|date_format: "Y-m-d"',
                 'address' => 'required|max:100',
                 'class' => 'required|max:20',
         ];
@@ -42,6 +43,8 @@ class RequestStudent extends FormRequest
                 'required' => ':attribute chưa nhập',
                 'max' => ':attribute không quá :max ký tự',
                 'min' => ':attribute : hãy nhập đầy đủ :attribute',
+                'date_format' => "Ngày sinh phải nhập đúng format ví dụ: 1997-03-04",
+                'regex' => "Tên chỉ bao gồm chữ cái",
         ];
     }
 }
