@@ -28,14 +28,14 @@
                             </div>
 
                         @endif
-                        <form action="{{route('admin.class.post-edit-class', ['id' => $data->id])}}" method="POST" role="form" enctype="multipart/form-data">
+                        <form action="{{route('admin.class.post-edit-class', ['id' => $class->id])}}" method="POST" role="form" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
 
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Kì học : <input type="text" name="semester" id="semester" class="form-control" value="{!! old('semester',isset($data->semester) ? $data->semester : null) !!}" required="required">
+                                        Kì học <span class="star-required">*</span>: <input type="text" name="semester" id="semester" class="form-control" value="{!! old('semester',isset($class->semester) ? $class->semester : null) !!}" required="required">
                                     </div>
 
 

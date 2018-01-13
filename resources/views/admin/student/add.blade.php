@@ -20,15 +20,15 @@
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 ">
                 <div class="form-group">
-                    <strong>ID</strong>
+                    <strong>ID<span class="star-required">*</span></strong>
                     {!! Form::text('id', null, array('placeholder' => 'Student ID','class' => 'form-control', 'value' => "{{old('class')}}" ,'required' => 'required')) !!}
                 </div>
                 <div class="form-group">
-                    <strong>Name</strong>
+                    <strong>Name<span class="star-required">*</span></strong>
                     {!! Form::text('name', null, array('placeholder' => 'Student Name','class' => 'form-control', 'value' => "{{old('class')}}", 'required' => 'required')) !!}
                 </div>
                 <div class="form-group">
-                    <strong>Email</strong>
+                    <strong>Email<span class="star-required">*</span></strong>
                     {!! Form::text('email', null, array('placeholder' => 'Student Email','class' => 'form-control', 'value' => "{{old('class')}}",'required' => 'required')) !!}
 
                 </div>
@@ -53,7 +53,7 @@
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6  ">
                 <div class="form-group">
-                    <strong>Password</strong>
+                    <strong>Password<span class="star-required">*</span></strong>
                     {!! Form::text('password', null, array('placeholder' => 'Password','class' => 'form-control', 'type' => 'password', 'required' => 'required')) !!}
                 </div>
             </div>

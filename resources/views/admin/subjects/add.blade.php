@@ -23,15 +23,15 @@
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-xs-offset-3 col-sm-offset-3 col-md-offset-3">
                 <div class="form-group">
-                    <strong>ID</strong>
+                    <strong>ID<span class="star-required">*</span></strong>
                     {!! Form::text('id', null, array('placeholder' => 'Subject ID','class' => 'form-control')) !!}
                 </div>
                 <div class="form-group">
-                    <strong>Name</strong>
+                    <strong>Name<span class="star-required">*</span></strong>
                     {!! Form::text('name', null, array('placeholder' => 'Subject Name','class' => 'form-control')) !!}
                 </div>
                 <div class="form-group">
-                    <strong>Credits</strong>
+                    <strong>Credits<span class="star-required">*</span></strong>
                     {!! Form::text('credits', null, array('placeholder' => 'Subject Credits','class' => 'form-control')) !!}
 
                 </div>

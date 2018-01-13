@@ -40,25 +40,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($data as $row)
+                                @foreach($class->students as $student)
                                     <tr>
 
-                                        <td>{!!$row->id!!}</td>
+                                        <td>{!!$student->id!!}</td>
                                         <td>
-                                            {!!$row->name!!}
+                                            {!!$student->name!!}
 
                                         </td>
-                                        <td>{!!$row->email!!}</td>
-{{--
-                                        {{dd($row->classes)}}
---}}                                    <td>{{$row->class}}</td>
-                                        @if($row->pivot->score != -1)
-                                        <td>{!! $row->pivot->score !!}</td>
+                                        <td>{!!$student->email!!}</td>
+                                        <td>{{$student->class}}</td>
+                                        @if($student->pivot->score != -1)
+                                        <td>{!! $student->pivot->score !!}</td>
                                         @else
                                             <td>------</td>
                                         @endif
                                         <td>
-                                            <form class="form-inline" method="POST" action="{{route('teacher.class.update-score', ['id' => $row->id, 'classes_id' => $classes_id])}}">
+                                            <form class="form-inline" method="POST" action="{{route('teacher.class.update-score', ['id' => $student->id, 'classesId' => $class->id])}}">
                                                 {{ csrf_field() }}
                                                 <div class="form-group">
                                                     <label for="semester"></label>
@@ -72,7 +70,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{-- {!! $data->render() !!}--}}
                     </div>
                 </div>
             </div>

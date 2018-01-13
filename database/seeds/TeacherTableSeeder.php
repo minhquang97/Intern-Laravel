@@ -17,7 +17,7 @@ class TeacherTableSeeder extends Seeder
             'id' => '1',
             'birthday' => '1990-02-02',
             'password' => bcrypt('123456'),
-            'status' => '0',
+            'status' => '1',
         ]);
         //
     }

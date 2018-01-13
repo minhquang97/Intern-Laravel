@@ -1,7 +1,6 @@
 @extends('student.layouts.header')
 
 @section('content')
-
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -16,7 +15,8 @@
                 {!! Session::get('flash_massage') !!}
             </ul>
         </div>
-        @elseif(Session()->has('success'))
+    @endif
+    @if(Session()->has('success'))
         <div class="alert alert-success">
             <ul>
                 {!! Session::get('success') !!}

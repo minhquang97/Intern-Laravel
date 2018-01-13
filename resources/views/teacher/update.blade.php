@@ -34,13 +34,13 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                                        Name : <input type="text" name="name" id="name" class="form-control" value="{!! old('name',isset($data->name) ? $data->name : null) !!}" required="required">
+                                        Name : <input type="text" name="name" id="name" class="form-control" value="{!! old('name',isset($teacher->name) ? $teacher->name : null) !!}" required="required">
                                     </div>
                                     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                                        Birthday : <input type="text" name="birthday" id="txtbirthday" class="form-control" value="{!! old('birthday',isset($data->birthday) ? $data->birthday : null) !!}" >
+                                        Birthday : <input type="text" name="birthday" id="txtbirthday" class="form-control" value="{!! old('birthday',isset($teacher->birthday) ? $teacher->birthday : null) !!}" >
                                     </div>
                                     <div class="col-xs-12 col-sm-5 col-md-6 col-lg-5">
-                                        Email : <input type="text" name="email" id="txtemail" class="form-control" value="{!! old('email',isset($data->email) ? $data->email : null) !!}" >
+                                        Email : <input type="text" name="email" id="txtemail" class="form-control" value="{!! old('email',isset($teacher->email) ? $teacher->email : null) !!}" >
                                     </div>
                                 </div>
                             </div>

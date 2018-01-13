@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-xs-offset-3 col-sm-offset-3 col-md-offset-3">
                 <div class="form-group">
-                    <label for="input-id">Chọn môn học</label>
+                    <label for="input-id">Chọn môn học<span class="star-required">*</span></label>
                     <select name="subject_id" id="subject_id" required class="form-control">
                         <option value="">--Môn học--</option>
                         @foreach($subject as $sub)
@@ -36,11 +36,11 @@
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-xs-offset-3 col-sm-offset-3 col-md-offset-3">
                 <div class="form-group">
-                    <strong>ID</strong>
+                    <strong>ID<span class="star-required">*</span></strong>
                     {!! Form::text('id', null, array('placeholder' => 'Class ID','class' => 'form-control')) !!}
                 </div>
                 <div class="form-group">
-                    <strong>Semester</strong>
+                    <strong>Semester<span class="star-required">*</span></strong>
                     {!! Form::text('semester', null, array('placeholder' => 'Class Name','class' => 'form-control')) !!}
                 </div>
 

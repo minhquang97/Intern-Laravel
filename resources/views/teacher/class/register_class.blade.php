@@ -56,31 +56,31 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($data as $row)
+                                @foreach($classes as $class)
                                     <tr>
 
-                                        <td>{!!$row->id!!}</td>
+                                        <td>{!!$class->id!!}</td>
                                         <td>
-                                            {!!$row->subject->name!!}
+                                            {!!$class->subject->name!!}
 
                                         </td>
                                         <td>
-                                            @if($row->teacher_id != 1)
-                                                {!!$row->teacher->name!!}
+                                            @if($class->teacher_id != 1)
+                                                {!!$class->teacher->name!!}
                                             @else
                                                 Chưa có
                                             @endif
                                         </td>
-                                        <td>{!!$row->semester!!}</td>
-                                        <td>{!!$row->subject->credits!!}</td>
+                                        <td>{!!$class->semester!!}</td>
+                                        <td>{!!$class->subject->credits!!}</td>
                                         <td>
-                                            <a href="{!!route('teacher.class.register-class', ['id' => $row->id])!!}" title="Sửa" class="btn btn-info"><span >Register</span> </a>
+                                            <a href="{!!route('teacher.class.register-class', ['id' => $class->id])!!}" title="Sửa" class="btn btn-info"><span >Register</span> </a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{$data->links()}}
+                            {{$classes->links()}}
                         </div>
                     </div>
                 </div>

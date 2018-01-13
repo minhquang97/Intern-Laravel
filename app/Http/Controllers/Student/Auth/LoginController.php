@@ -54,10 +54,14 @@ class LoginController extends Controller
     }
     public function authenticate(Request $request)
     {
-        $remember_token = $request->has('remember_token') ? true : false;
-        if (Auth::guard('student')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'])) {
+        $rememberToken = $request->has('remember_token') ? true : false;
+        if (Auth::guard('student')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'], $rememberToken)) {
             // Authentication passed...
             return redirect()->intended(route('student.home'));
+        }
+        if (Auth::guard('student')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '0'], $rememberToken)) {
+            // Authentication passed...
+            return redirect()->route('student.login')->withErrors('Account not active!!');
         }
         return redirect()->route('student.login')->withErrors('Email or password incorrect!!');
     }
@@ -65,7 +69,7 @@ class LoginController extends Controller
     public function verify($token)
     {
         Student::where('email_token', '=', $token)->firstOrFail()->verified();
-        return redirect()->route('teacher.login')->with('success','Your account has been activated!!');
+        return redirect()->route('student.login')->with('success','Your account has been activated!!');
     }
 
     public function logout(Request $request)

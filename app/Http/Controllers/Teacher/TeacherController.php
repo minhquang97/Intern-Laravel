@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 class TeacherController extends Controller
 {
     public function __construct()
@@ -21,8 +21,8 @@ class TeacherController extends Controller
     }
 
     public function classes() {
-        $data = Classes::with('teacher')->with('subject')->paginate(5);
-        return view('teacher.class.register_class',compact('data'));
+        $classes = Classes::with('teacher')->with('subject')->paginate(5);
+        return view('teacher.class.register_class',compact('classes'));
     }
 
     public function listClass() {
@@ -32,28 +32,33 @@ class TeacherController extends Controller
     }
 
     public function registerClass($id) {
-        $classes = Classes::where('id','=',$id)->first();
+        $classes = Classes::where('id','=',$id)->firstOrFail();
         $teacher_id = Auth::guard('teacher')->user()->id;
-        if($classes->teacher_id != 1 || $teacher_id == 1 || $classes->teacher_id == $teacher_id)
+        if($classes->teacher_id != 1 || $teacher_id == 1)
             return back()->with('danger', 'Class was registered by other teacher!!!!');
+        if($classes->teacher_id == $teacher_id)
+            return back()->withErrors('You were registered this class!!!');
         DB::table('classes')->where('id', $id)->update(['teacher_id' => $teacher_id]);
         return redirect()->action('Teacher\TeacherController@listClass')->with('success', 'Register Class Successfully');
     }
 
     public function deleteClass($id)
     {
-        DB::table('classes')->where('id', $id)->update(['teacher_id' => '1']);
+        $class = Classes::where('id',$id)->firstOrFail();
+        $teacher = Auth::guard('teacher')->user();
+        if($class->teacher_id != $teacher->id)
+            return back()->withErrors('Permission denied!!');
+        $class->teacher_id = 1;
+        $class->save();
         return back()->with('success', 'Class detele successfully!!');
     }
 
     public function listStudent($id) {
-        $classes = Classes::where('id','=',$id)->first();
-        $data = $classes->students;
-        $classes_id = $id;
-        return view('teacher/class/list-student', ['data' => $data, 'classes_id' => $classes_id]);
+        $class = Classes::where('id','=',$id)->firstOrFail();
+        return view('teacher/class/list-student', ['class' => $class]);
     }
 
-    public function updateScore(Request $request, $id, $classes_id) {
+    public function updateScore(Request $request, $id, $classesId) {
         $validator = Validator::make($request->all(), [
             'score' => 'required|integer|between:0,10',
         ],
@@ -65,30 +70,33 @@ class TeacherController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         $student = Student::where('id','=',$id)->first();
-        foreach($student->classes as $css)
+        foreach($student->classes as $class)
         {
-            if($css->pivot->class_id == $classes_id){
-                $css->pivot->score = $request->score;
-                $css->pivot->save();
+            if($class->pivot->class_id == $classesId){
+                $class->pivot->score = $request->score;
+                $class->pivot->save();
             }
         }
-        return redirect()->route('teacher.class.list-student', ['id' => $classes_id])
+        return redirect()->route('teacher.class.list-student', ['id' => $classesId])
             ->with('success','Update Score Successfully!!');
     }
 
     public function searchClass(Request $request)
     {
-        $class = Classes::Where('id', 'like', '%'.$request->nameOrId.'%')
-            ->with('teacher')->with('subject')->paginate(5);
-        if($class && $class->count() > 0){
-            return view('teacher.class.register_class', ['data' => $class]);
+        $classes = Classes::Where('id', 'like', '%'.$request->nameOrId.'%')
+            ->with('teacher', 'subject')->paginate(5);
+        if($classes && $classes->count() > 0){
+            return view('teacher.class.register_class', ['classes' => $classes]);
         }
 
-        $classByName = Subject::where('name', '=' , $request->nameOrId)->first();
-        $class = Classes::Where('subject_id', '=', $classByName->id)
-            ->with('teacher')->with('subject')->paginate(5);
+        $class = Classes::with([
+            "subject" => function($query) {
+
+            }
+        ]);
+        dd($class);
         if($class && $class->count() > 0){
-            return view('teacher.class.register_class', ['data' => $class]);
+            return view('teacher.class.register_class', ['classes' => $class]);
         }
         return redirect()->route('teacher.class')->withErrors('Data not exist!!!');
     }
@@ -96,7 +104,7 @@ class TeacherController extends Controller
     public function getUpdateInfo()
     {
         $teacher =  Auth::guard('teacher')->user();
-        return view('teacher.update', ['data' => $teacher]);
+        return view('teacher.update', ['teacher' => $teacher]);
     }
 
     public function updateInfo(Request $request)
@@ -151,7 +159,7 @@ class TeacherController extends Controller
 
         $teacher->password = bcrypt($request->get('new-password'));
         $teacher->save();
-        return back()->with('success', 'Password changed successfully!1');
+        return back()->with('success', 'Password changed successfully!!');
     }
 
 

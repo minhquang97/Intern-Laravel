@@ -54,27 +54,27 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($data as $row)
-                                    @if($row->id !=1)
+                                @foreach($teachers as $teacher)
+                                    @if($teacher->id !=1)
                                         <tr>
 
-                                            <td>{!!$row->id!!}</td>
-                                            <td>{!!$row->name!!}</td>
-                                            <td>{!!$row->birthday!!}</td>
-                                            <td>{!!$row->email!!}</td>
+                                            <td>{!!$teacher->id!!}</td>
+                                            <td>{!!$teacher->name!!}</td>
+                                            <td>{!!$teacher->birthday!!}</td>
+                                            <td>{!!$teacher->email!!}</td>
                                             <td>
-                                                @if(!$row->status)
+                                                @if(!$teacher->status)
                                                     <span style="color: red;">Chưa kích hoạt</span>
                                                 @else <span style="color: #2a88bd;"> Đã kích hoạt</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{!!route('admin.teacher.get-edit-teacher',['id' => $row->id])!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
-                                                <a href="{!!route('admin.teacher.info-teacher', ['id' => $row->id])!!}" class="btn btn-success"><span>Info</span> </a>
+                                                <a href="{!!route('admin.teacher.get-edit-teacher',['id' => $teacher->id])!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
+                                                <a href="{!!route('admin.teacher.info-teacher', ['id' => $teacher->id])!!}" class="btn btn-success"><span>Info</span> </a>
                                             </td>
                                             <td>
-                                                <form class="form-inline" method="POST" action="{!! route('admin.teacher.delete-teacher', ['id' => $row->id]) !!}">
-                                                    <input type="hidden" name="class_id" value="{{ $row->id }}">
+                                                <form class="form-inline" method="POST" action="{!! route('admin.teacher.delete-teacher', ['id' => $teacher->id]) !!}">
+                                                    <input type="hidden" name="class_id" value="{{ $teacher->id }}">
                                                     <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
                                                     {{ method_field('DELETE') }}
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -85,7 +85,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{$data->links()}}
+                            {{$teachers->links()}}
                         </div>
                     </div>
                 </div>

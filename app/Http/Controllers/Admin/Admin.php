@@ -21,14 +21,14 @@ use Validator;
 use function str_random;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Admin extends Controller
 {
     public function listTeacher()
     {
-        $data = Teacher::latest()->paginate(5);
-        return view('admin.teacher.list',compact('data'));
+        $teachers = Teacher::latest()->paginate(5);
+        return view('admin.teacher.list',compact('teachers'));
     }
 
     public function addTeacher(RequestTeacher $request)
@@ -49,13 +49,13 @@ class Admin extends Controller
 
     public function editTeacher($id)
     {
-        $data = Teacher::find($id);
-        return view('admin.teacher.edit',['data' => $data]);
+        $teacher = Teacher::findOrFail($id);
+        return view('admin.teacher.edit',['teacher' => $teacher]);
     }
 
     public function postEditTeacher(Request $request, $id)
     {
-        $teacher = Teacher::find($id);
+        $teacher = Teacher::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'email' => ['required',
                 Rule::unique('teachers')->ignore($teacher->id)
@@ -99,14 +99,14 @@ class Admin extends Controller
 
     public function deleteTeacher($id)
     {
-        Teacher::find($id)->delete();
+        Teacher::findOrFail($id)->delete();
         return back()->with('success','Delete Successfully');
     }
 
     public function listStudent()
     {
-        $data = Student::latest()->paginate(5);
-        return view('admin.student.list',compact('data'));
+        $students = Student::latest()->paginate(5);
+        return view('admin.student.list', compact('students'));
     }
 
     public function addStudent(RequestStudent $request)
@@ -129,14 +129,14 @@ class Admin extends Controller
 
     public function editStudent( $id)
     {
-        $data = Student::find($id);
-        return view('admin.student.edit',['data' => $data]);
+        $student = Student::findOrFail($id);
+        return view('admin.student.edit',['student' => $student]);
     }
 
     public function postEditStudent(Request $request, $id)
     {
 
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'email' => ['required',
                 Rule::unique('students')->ignore($student->id)
@@ -191,8 +191,8 @@ class Admin extends Controller
 
     public function listSubject()
     {
-        $data = Subject::latest()->paginate(5);
-        return view('admin.subjects.list',compact('data'));
+        $subjects = Subject::latest()->paginate(5);
+        return view('admin.subjects.list',compact('subjects'));
     }
 
     public function addSubject(RequestSubject $request)
@@ -203,13 +203,13 @@ class Admin extends Controller
 
     public function editSubject($id)
     {
-        $data = Subject::find($id);
-        return view('admin.subjects.edit',['data' => $data]);
+        $subject = Subject::findOrFail($id);
+        return view('admin.subjects.edit',['subject' => $subject]);
     }
 
     public function postEditSubject(Request $request, $id)
     {
-        $subject = Subject::find($id);
+        $subject = Subject::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'id' => ['min:1','required',
                 Rule::unique('subjects')->ignore($subject->id)
@@ -230,15 +230,15 @@ class Admin extends Controller
 
     public function deleteSubject($id)
     {
-        Subject::find($id)->delete();
+        Subject::findOrFail($id)->delete();
         return back()->with('success','Delete Successfully');
     }
 
 
     public function listClass()
     {
-        $data = Classes::latest()->paginate(5);
-        return view('admin.class.list',compact('data'));
+        $classes = Classes::latest()->paginate(5);
+        return view('admin.class.list',compact('classes'));
     }
 
     public function addClass(RequestClass $request)
@@ -254,13 +254,13 @@ class Admin extends Controller
 
     public function editClass($id)
     {
-        $data = Classes::find($id);
-        return view('admin.class.edit',['data' => $data]);
+        $class = Classes::findOrFail($id);
+        return view('admin.class.edit',['data' => $class]);
     }
 
     public function postEditClass(Request $request, $id)
     {
-        $class = Classes::find($id);
+        $class = Classes::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'semester' => 'numeric',
         ], [
@@ -276,13 +276,13 @@ class Admin extends Controller
 
     public function deleteClass($id)
     {
-        Classes::find($id)->delete();
+        Classes::findOrFail($id)->delete();
         return back()->with('success','Delete Successfully');
     }
 
     public function infoStudent($id)
     {
-        $student = Student::where('id','=',$id)->first();
+        $student = Student::where('id','=',$id)->firstOrFail();
         $classes = $student->classes()->with('teacher')->with('subject')->orderBy('semester')->get();
         return view('admin.student.info', ['student' => $student, 'classStudents' => $classes]);
     }
@@ -315,7 +315,7 @@ class Admin extends Controller
     }
     public function findAvg($id, Request $request)
     {
-        $student = Student::where('id','=',$id)->first();
+        $student = Student::where('id','=',$id)->firstOrFail();
         $classes = $student->classes()->where('semester','=',$request->semester)
             ->with('teacher')->with('subject')->get();
         $i = 0;
@@ -341,8 +341,7 @@ class Admin extends Controller
     public function searchStudent(Request $request)
     {
         $student = Student::where('id', 'like', '%'.$request->nameOrId.'%')
-            ->orWhere('name', 'like', '%'.$request->nameOrId.'%')->orWhere('class', 'like', '%'.$request->nameOrId.'%')
-            ->select('students.*')->paginate(5);
+            ->orWhere('name', 'like', '%'.$request->nameOrId.'%')->orWhere('class', 'like', '%'.$request->nameOrId.'%')->paginate(5);
         if($student && $student->count() >0){
             return view('admin.student.list', ['data' => $student]);
         }
@@ -352,8 +351,7 @@ class Admin extends Controller
     public function searchTeacher(Request $request)
     {
         $teacher = Teacher::where('id', 'like', '%'.$request->nameOrId.'%')
-            ->orWhere('name', 'like', '%'.$request->nameOrId.'%')
-            ->select('teachers.*')->paginate(5);
+            ->orWhere('name', 'like', '%'.$request->nameOrId.'%')->paginate(5);
         if($teacher && $teacher->count() >0){
             return view('admin.teacher.list', ['data' => $teacher]);
         }
@@ -365,7 +363,7 @@ class Admin extends Controller
         $class = DB::table('classes')->join('subjects','subjects.id','=','classes.subject_id')
             ->Where('classes.id', 'like', '%'.$request->nameOrId.'%')
             ->orWhere('subjects.name', 'like', '%'.$request->nameOrId.'%')->orWhere('semester', '=', $request->nameOrId)
-            ->select('classes.*')->paginate(5);
+            ->paginate(5);
         if($class && $class->count() > 0){
             return view('admin.class.list', ['data' => $class]);
         }
@@ -376,7 +374,7 @@ class Admin extends Controller
     {
         $subject = Subject::Where('id', 'like', '%'.$request->nameOrId.'%')
             ->orWhere('name', 'like', '%'.$request->nameOrId.'%')
-            ->select('subjects.*')->paginate(5);
+            ->paginate(5);
         if($subject && $subject->count() > 0){
             return view('admin.subjects.list', ['data' => $subject]);
         }

@@ -58,7 +58,7 @@ class StudentController extends Controller
     public function deleteClass($id) {
         $student = Auth::guard('student')->user();
         $class = Classes::where('id','=',$id)->first();
-        if($student->classes()->where('class_id','=',$id)->first()->score != -1)
+        if($student->classes()->where('class_id','=',$id)->first()->score == -1)
         {
             return back()->withErrors('You can\'t delete this class. Over time!!');
         }

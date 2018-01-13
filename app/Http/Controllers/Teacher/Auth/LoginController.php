@@ -48,9 +48,13 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $remember = $request->has('remember_token') ? true : false;
-        if (Auth::guard('teacher')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1', 'remember_token' => $remember])) {
+        if (Auth::guard('teacher')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'], $remember)) {
             // Authentication passed...
             return redirect()->intended(route('teacher.home'));
+        }
+        if (Auth::guard('teacher')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '0'], $remember)) {
+            // Authentication passed...
+            return redirect()->route('teacher.login')->withErrors('Account not active!!!!');
         }
         return redirect()->route('teacher.login')->withErrors('Email or password incorrect!!');
     }

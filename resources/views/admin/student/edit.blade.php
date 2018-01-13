@@ -27,32 +27,32 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{route('admin.student.post-edit-student',['id' => $data->id])}}" method="POST" role="form" enctype="multipart/form-data">
+                        <form action="{{route('admin.student.post-edit-student',['id' => $student->id])}}" method="POST" role="form" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
 
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                                        ID : <input type="text" name="id" id="txtID" class="form-control" value="{!! old('id',isset($data["id"]) ? $data["id"] : null) !!}" required="required">
+                                        ID<span class="star-required">*</span> : <input type="text" name="id" id="txtID" class="form-control" value="{!! old('id',isset($student["id"]) ? $student["id"] : null) !!}" required="required">
                                     </div>
                                     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                                        Name : <input type="text" name="name" id="name" class="form-control" value="{!! old('name',isset($data->name) ? $data->name : null) !!}" required="required">
+                                        Name<span class="star-required">*</span> : <input type="text" name="name" id="name" class="form-control" value="{!! old('name',isset($student->name) ? $student->name : null) !!}" required="required">
                                     </div>
                                     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                                        Birthday : <input type="text" name="birthday" id="txtbirthday" class="form-control" value="{!! old('birthday',isset($data->birthday) ? $data->birthday : null) !!}" >
+                                        Birthday : <input type="text" name="birthday" id="txtbirthday" class="form-control" value="{!! old('birthday',isset($student->birthday) ? $student->birthday : null) !!}" >
                                     </div>
                                     <div class="col-xs-12 col-sm-5 col-md-6 col-lg-5">
-                                        Email : <input type="text" name="email" id="txtemail" class="form-control" value="{!! old('email',isset($data->email) ? $data->email : null) !!}" >
+                                        Email<span class="star-required">*</span> : <input type="text" name="email" id="txtemail" class="form-control" value="{!! old('email',isset($student->email) ? $student->email : null) !!}" >
                                     </div>
                                     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                                        Address : <input type="text" name="address" id="txtaddress" class="form-control" value="{!! old('address',isset($data->address) ? $data->address : null) !!}">
+                                        Address : <input type="text" name="address" id="txtaddress" class="form-control" value="{!! old('address',isset($student->address) ? $student->address : null) !!}">
                                     </div>
                                     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                                        Class : <input type="text" name="class" id="txtclass" class="form-control" value="{!! old('class',isset($data->class) ? $data->class : null) !!}" >
+                                        Class : <input type="text" name="class" id="txtclass" class="form-control" value="{!! old('class',isset($student->class) ? $student->class : null) !!}" >
                                     </div>
                                     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-                                        Password : <input type="text" name="password" id="txtpassword"  class="form-control">
+                                        Password<span class="star-required">*</span> : <input type="text" name="password" id="txtpassword"  class="form-control">
                                     </div>
 
                                 </div>
