@@ -16,7 +16,7 @@ class CreateTeachersTable extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',50);
-            $table->date('birthday');
+            $table->date('birthday')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('status')->default(0);

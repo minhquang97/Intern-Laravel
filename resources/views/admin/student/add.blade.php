@@ -10,9 +10,6 @@
                 @foreach ($errors->all() as $message)
                     <li>{{ $message }}</li>
                 @endforeach
-                @if ($errors->has('name'))
-                    {{$errors->first('name')}}
-                @endif
             </ul>
             Mời nhập lại
         </div>
@@ -23,41 +20,41 @@
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 ">
                 <div class="form-group">
-                    <strong>ID</strong>
-                    {!! Form::text('id', null, array('placeholder' => 'Student ID','class' => 'form-control')) !!}
+                    <strong>ID<span class="star-required">*</span></strong>
+                    {!! Form::text('id', null, array('placeholder' => 'Student ID','class' => 'form-control', 'value' => "{{old('class')}}" ,'required' => 'required')) !!}
                 </div>
                 <div class="form-group">
-                    <strong>Name</strong>
-                    {!! Form::text('name', null, array('placeholder' => 'Student Name','class' => 'form-control')) !!}
+                    <strong>Name<span class="star-required">*</span></strong>
+                    {!! Form::text('name', null, array('placeholder' => 'Student Name','class' => 'form-control', 'value' => "{{old('class')}}", 'required' => 'required')) !!}
                 </div>
                 <div class="form-group">
-                    <strong>Email</strong>
-                    {!! Form::text('email', null, array('placeholder' => 'Student Email','class' => 'form-control')) !!}
+                    <strong>Email<span class="star-required">*</span></strong>
+                    {!! Form::text('email', null, array('placeholder' => 'Student Email','class' => 'form-control', 'value' => "{{old('class')}}",'required' => 'required')) !!}
 
                 </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 ">
                 <div class="form-group">
                     <strong>Date of birth</strong>
-                    {!! Form::text('birthday', null, array('placeholder' => 'Date of Birth','class' => 'form-control', 'value' => "{{old('birthday')}}")) !!}
+                    {!! Form::text('birthday', null, array('placeholder' => 'Date of Birth','class' => 'form-control', 'value' => "{{old('birthday')}}", 'required' => 'required')) !!}
                 </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 ">
                 <div class="form-group">
                     <strong>Address</strong>
-                    {!! Form::text('address', null, array('placeholder' => 'Address','class' => 'form-control', 'value' => "{{old('address')}}")) !!}
+                    {!! Form::text('address', null, array('placeholder' => 'Address','class' => 'form-control', 'value' => "{{old('address')}}" , 'required' => 'required')) !!}
                 </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6  ">
                 <div class="form-group">
                     <strong>Class</strong>
-                    {!! Form::text('class', null, array('placeholder' => 'Class','class' => 'form-control', 'value' => "{{old('class')}}")) !!}
+                    {!! Form::text('class', null, array('placeholder' => 'Class','class' => 'form-control', 'value' => "{{old('class')}}", 'required' => 'required')) !!}
                 </div>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6  ">
                 <div class="form-group">
-                    <strong>Password</strong>
-                    {!! Form::text('password', null, array('placeholder' => 'Password','class' => 'form-control', 'type' => 'password')) !!}
+                    <strong>Password<span class="star-required">*</span></strong>
+                    {!! Form::text('password', null, array('placeholder' => 'Password','class' => 'form-control', 'type' => 'password', 'required' => 'required')) !!}
                 </div>
             </div>
         </div>

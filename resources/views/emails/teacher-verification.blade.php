@@ -82,7 +82,7 @@
                                     </div></td></tr></tbody></table></div><!--[if mso | IE]>
                     </td><td style="vertical-align:top;width:180px;">
                     <![endif]--><div aria-labelledby="mj-column-per-30" class="mj-column-per-30" style="vertical-align:top;display:inline-block;font-size:13px;text-align:left;width:100%;"><table cellpadding="0" cellspacing="0" width="100%" border="0"><tbody><tr><td style="word-break:break-word;font-size:0px;padding:0px 0px 10px;" align="left"><div style="cursor:auto;color:#222228;font-family:'Avenir Next', Avenir, sans-serif;font-size:16px;line-height:30px;">
-                                        <a href="{{route('teacher.verify', $teacher->email_token)}} " style="font-weight: 500; white-space: nowrap;">Verify Link</a>
+                                        <a href="{{route('teacher.verify', $teacher->email_token)}} " style="font-weight: 500; white-space: nowrap;">localhost:8000/teacher/verify/{{$teacher->email_token}}</a>
                                     </div></td></tr></tbody></table></div><!--[if mso | IE]>
                     </td><td style="vertical-align:top;width:420px;">
                     <![endif]-->

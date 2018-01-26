@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -16,13 +17,14 @@
                 {!! Session::get('flash_massage') !!}
             </ul>
         </div>
-    @elseif(Session()->has('success'))
+    @endif
+    @if(Session()->has('success'))
         <div class="alert alert-success">
             <ul>
                 {!! Session::get('success') !!}
             </ul>
         </div>
-    @endif
+        @endif
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -77,7 +79,7 @@
                                         Login
                                     </button>
 
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link" href="{{ route('teacher.password_reset') }}">
                                         Forgot Your Password?
                                     </a>
                                 </div>

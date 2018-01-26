@@ -23,7 +23,7 @@ class RequestStudent extends FormRequest
     public function rules()
     {
         return [
-                'id' =>'required|numeric|unique:students',
+                'id' =>'required|numeric|unique:students|min:4',
                 'name' => 'required|max:50|min:5|max:255',
                 'email' => 'required|unique:students',
                 'birthday' => 'required|date_format: "Y-m-d"',
@@ -45,6 +45,7 @@ class RequestStudent extends FormRequest
                 'max' => ':attribute không quá :max ký tự',
                 'min' => ':attribute : quá ngắn',
                 'date_format' => "Ngày sinh phải nhập đúng format ví dụ: 1997-03-04",
+                'numeric' => 'Id phải ở dạng số',
         ];
     }
 }

@@ -6,7 +6,7 @@
         </div>
     @endif
     <h2>Danh sách các lớp đã đăng ký</h2>
-    <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
+    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-0 main">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -36,28 +36,33 @@
                                     <th>Teacher Name</th>
                                     <th>Semester</th>
                                     <th>Credits</th>
+                                    <th>Score</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{$i=0}}
                                 @foreach($data as $row)
                                     <tr>
 
                                         <td>{!!$row->id!!}</td>
                                         <td>
-                                            {!!App\Model\Subject::find($row->subject_id)->name!!}
+                                            {!!$row->subject->name!!}
 
                                         </td>
                                         <td>
                                             @if($row->teacher_id != 1)
-                                                {!!App\Model\Teacher::find($row->teacher_id)->name!!}
+                                                {!! $row->teacher->name !!}
                                             @else
                                                 Chưa có
                                             @endif
                                         </td>
                                         <td>{!!$row->semester!!}</td>
-                                        <td>{!!App\Model\Subject::find($row->subject_id)->credits!!}</td>
+                                        <td>{!!$row->subject->credits!!}</td>
+                                        @if($row->pivot->score!=-1)
+                                        <td>{!! $row->pivot->score !!}</td>
+                                        @else
+                                            <td>Chua co</td>
+                                        @endif
                                         <td>
                                             <form class="form-inline" method="POST" action="{!! route('student.class.delete-class', ['id' => $row->id]) !!}">
                                                 <input type="hidden" name="class_id" value="{{ $row->id }}">

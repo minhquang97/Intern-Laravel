@@ -6,7 +6,7 @@
         </div>
     @endif
     <h2>Danh sách các lớp đã đăng ký</h2>
-    <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
+    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-0 main">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -40,19 +40,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{$i=0}}
                                 @foreach($data as $row)
                                     <tr>
 
                                         <td>{!!$row->id!!}</td>
                                         <td>
-                                            {!!App\Model\Subject::find($row->subject_id)->name!!}
+                                            {!!$row->subject->name!!}
 
                                         </td>
                                         <td>{!!$row->semester!!}</td>
-                                        <td>{!!App\Model\Subject::find($row->subject_id)->credits!!}</td>
+                                        <td>{!!$row->subject->credits!!}</td>
                                         <td>
-                                            <a href="{!!route('teacher.class.list-student', ['id' => $row->id])!!}" title="Xem" class="btn btn-info"}}"><span >More Info</span> </a>
+                                            <a href="{!!route('teacher.class.list-student', ['id' => $row->id])!!}" title="Xem" class="btn btn-info""><span >More Info</span> </a>
                                         </td>
                                         <td>
                                             <form class="form-inline" method="POST" action="{!! route('teacher.class.delete-class', ['id' => $row->id]) !!}">
@@ -67,6 +66,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        {!! $data->links() !!}
                        {{-- {!! $data->render() !!}--}}
                     </div>
                 </div>

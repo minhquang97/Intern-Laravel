@@ -28,20 +28,19 @@
                             </div>
 
                         @endif
-                        <form action="{{route('admin.subject.post-edit-subject',['id' => $data->id])}}" method="POST" role="form" enctype="multipart/form-data">
+                        <form action="{{route('admin.subject.post-edit-subject',['id' => $subject->id])}}" method="POST" role="form" enctype="multipart/form-data">
                             {{ csrf_field() }}
-
 
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        ID : <input type="text" name="id" id="txtID" class="form-control" value="{!! old('id',isset($data["id"]) ? $data["id"] : null) !!}" required="required">
+                                        ID <span class="star-required">*</span>: <input type="text" name="id" id="txtID" class="form-control" value="{!! old('id',isset($subject["id"]) ? $subject["id"] : null) !!}" required="required">
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Name : <input type="text" name="name" id="name" class="form-control" value="{!! old('name',isset($data->name) ? $data->name : null) !!}" required="required">
+                                        Name <span class="star-required">*</span>: <input type="text" name="name" id="name" class="form-control" value="{!! old('name',isset($subject->name) ? $subject->name : null) !!}" required="required">
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        Birthday : <input type="text" name="credits" id="credits" class="form-control" value="{!! old('credits',isset($data->credits) ? $data->credits : null) !!}" class="form-control">
+                                        Credits <span class="star-required">*</span>: <input type="text" name="credits" id="credits" class="form-control" value="{!! old('credits',isset($subject->credits) ? $subject->credits : null) !!}" class="form-control">
                                     </div>
 
                                 </div>

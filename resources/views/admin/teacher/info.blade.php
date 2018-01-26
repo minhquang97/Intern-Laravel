@@ -34,7 +34,7 @@
                         <thead>
                         <tr>
                             <th>Class ID</th>
-                            {{--<th>Subject Name</th>--}}
+                            <th>Subject Name</th>
                             <th>Subject ID</th>
                             <th>Semester</th>
                         </tr>
@@ -43,6 +43,7 @@
                         @foreach($classes as $class)
                             <tr>
                                 <th>{!! $class->id !!}   </th>
+                                <th>{!! $class->name !!}</th>
                                 <th>{!! $class->subject_id !!}</th>
                                 <th>{!! $class->semester !!}</th>
                             </tr>

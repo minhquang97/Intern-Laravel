@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
@@ -23,8 +24,18 @@ class ForgotPasswordController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @return
      */
+    public function showLinkRequestForm()
+    {
+        return view('student.emails');
+    }
+
+    public function broker()
+    {
+        return Password::broker('students');
+    }
+
     public function __construct()
     {
         $this->middleware('guest');

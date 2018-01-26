@@ -19,7 +19,7 @@ class StudentTableSeeder extends Seeder
             'address' => 'HN VN',
             'id' => '20152945',
             'password' => bcrypt('123456'),
-            'status' => '0',
+            'status' => '1',
         ]);
         //
     }

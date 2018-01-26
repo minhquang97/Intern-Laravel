@@ -5,10 +5,20 @@
             {{ session('success') }}
         </div>
     @endif
-    <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
+    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-0 main">
         <div class="row">
-            <div class="pull-right">
+            <div class="col-sm-offset-6 col-sm-2 col-lg-offset-6 col-lg-2" >
                 <a class="btn btn-success" href="{{ route('admin.class.get-add-class') }}"> Create New Class</a>
+            </div>
+            <div class="col-sm-offset-0 col-sm-3 col-lg-offset-0 col-lg-4">
+                <form class="form-inline" method="POST" action="{{route('admin.class.search-class')}}">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="nameOrId"></label>
+                        <input type="text" class="form-control" id="nameOrId" placeholder="Class Name or ID" name="nameOrId" required="required">
+                        <button type="submit" class="btn btn-success">Search Class</button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -44,29 +54,29 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($data as $row)
+                                @foreach($classes as $class)
                                     <tr>
 
-                                        <td>{!!$row->id!!}</td>
+                                        <td>{!!$class->id!!}</td>
                                         <td>
-                                            {!!App\Model\Subject::find($row->subject_id)->name!!}
+                                            {!!App\Model\Subject::find($class->subject_id)->name!!}
 
                                         </td>
                                         <td>
-                                            @if($row->teacher_id != 1)
-                                                {!!App\Model\Teacher::find($row->teacher_id)->name!!}
+                                            @if($class->teacher_id != 1)
+                                                {!!App\Model\Teacher::find($class->teacher_id)->name!!}
                                             @else
                                                 Chưa có
                                             @endif
                                         </td>
-                                        <td>{!!$row->semester!!}</td>
+                                        <td>{!!$class->semester!!}</td>
                                         <td>
-                                            <a href="{!!route('admin.class.get-edit-class', ['id' => $row->id])!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
-                                            <a href="{!!route('admin.student.info-student', ['id' => $row->id])!!}" class="btn btn-success"><span>Info</span> </a>
+                                            <a href="{!!route('admin.class.get-edit-class', ['id' => $class->id])!!}" title="Sửa" class="btn btn-info"><span >Edit</span> </a>
+                                            <a href="{!!route('admin.class.info-class', ['id' => $class->id])!!}" class="btn btn-success"><span>Info</span> </a>
                                         </td>
                                         <td>
-                                            <form class="form-inline" method="POST" action="{!! route('admin.class.delete-class', ['id' => $row->id]) !!}">
-                                                <input type="hidden" name="class_id" value="{{ $row->id }}">
+                                            <form class="form-inline" method="POST" action="{!! route('admin.class.delete-class', ['id' => $class->id]) !!}">
+                                                <input type="hidden" name="class_id" value="{{ $class->id }}">
                                                 <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
                                                 {{ method_field('DELETE') }}
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -76,6 +86,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{$classes->links()}}
                         </div>
                     </div>
                 </div>

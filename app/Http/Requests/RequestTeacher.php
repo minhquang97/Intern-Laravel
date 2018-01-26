@@ -26,7 +26,7 @@ class RequestTeacher extends FormRequest
             'id' =>'required|numeric|unique:teachers',
             'name' => 'required|max:50|min:5|max:255',
             'email' => 'required|unique:teachers',
-            'birthday' => 'required|date_format: "Y-m-d"',
+            'birthday' => 'nullable|date_format: "Y-m-d"',
             'password' => 'required|min:6',
         ];
     }
@@ -40,7 +40,6 @@ class RequestTeacher extends FormRequest
         return [
             'unique' => 'Duplicate :attribute',
             'name.required' => 'Bạn phải nhập tên',
-            'birthday.required' => 'Sao không nhập email?',
             'required' => ':attribute chưa nhập',
             'max' => ':attribute không quá :max ký tự',
             'min' => ':attribute : quá ngắn',

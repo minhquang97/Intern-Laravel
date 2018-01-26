@@ -6,7 +6,7 @@
         </div>
     @endif
     <h2>Danh sách học sinh</h2>
-    <div class="col-sm-7 col-sm-offset-2 col-lg-8 col-lg-offset-1 main">
+    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-0 main">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -34,41 +34,34 @@
                                     <th>Student ID</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Class</th>
                                     <th>Score</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($data as $row)
+                                @foreach($class->students as $student)
                                     <tr>
 
-                                        <td>{!!$row->id!!}</td>
+                                        <td>{!!$student->id!!}</td>
                                         <td>
-                                            {!!$row->name!!}
+                                            {!!$student->name!!}
 
                                         </td>
-                                        <td>{!!$row->email!!}</td>
-{{--
-                                        {{dd($row->classes)}}
---}}
-                                        <td>@foreach($row->classes as $css)
-
-                                            @if($css->pivot->class_id == $classes_id)
-                                                    @if($css->pivot->score == -1)
-                                                        ----
-                                                    @else
-                                                        {{$css->pivot->score}}
-                                                        @endif
-                                                @endif
-                                            @endforeach
-                                        </td>
+                                        <td>{!!$student->email!!}</td>
+                                        <td>{{$student->class}}</td>
+                                        @if($student->pivot->score != -1)
+                                        <td>{!! $student->pivot->score !!}</td>
+                                        @else
+                                            <td>------</td>
+                                        @endif
                                         <td>
-                                            <form class="form-inline" method="POST" action="{{route('teacher.class.update-score', ['id' => $row->id, 'classes_id' => $classes_id])}}">
+                                            <form class="form-inline" method="POST" action="{{route('teacher.class.update-score', ['id' => $student->id, 'classesId' => $class->id])}}">
                                                 {{ csrf_field() }}
                                                 <div class="form-group">
                                                     <label for="semester"></label>
                                                     <input type="text" class="form-control" id="semester" placeholder="Enter Score" name="score">
-                                                    <button type="submit" class="btn btn-success">Update Score</button>
+                                                    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure you want to change this item?');">Update Score</button>
                                                 </div>
                                             </form>
                                         </td>
@@ -77,7 +70,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{-- {!! $data->render() !!}--}}
                     </div>
                 </div>
             </div>

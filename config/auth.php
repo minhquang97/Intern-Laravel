@@ -118,6 +118,19 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+        'students' => [
+            //user provider for seller
+            'provider' => 'students',
+            //table to store password reset tokens for seller
+            'table' => 'student_password_resets',
+            //expire time for these tokens in minutes
+            'expire' => 60,
+        ],
+        'teachers' => [
+            'provider' => 'teachers',
+            'table' => 'teacher_password_resets',
+            'expire' => 60,
+        ]
     ],
 
 ];
